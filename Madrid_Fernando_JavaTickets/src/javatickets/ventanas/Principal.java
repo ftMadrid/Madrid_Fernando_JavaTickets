@@ -1,7 +1,6 @@
 package javatickets.ventanas;
 
 import java.awt.*;
-import javatickets.usuarios.Usuarios;
 import javatickets.utilidades.Fondos;
 import javax.swing.*;
 

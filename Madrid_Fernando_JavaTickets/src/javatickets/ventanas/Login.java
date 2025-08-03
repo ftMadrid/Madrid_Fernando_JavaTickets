@@ -13,14 +13,12 @@ public class Login extends JFrame {
     public Login() {
         initVentana();
         initComponentes();
-
-        Usuarios.usuarios[1] = new Usuarios("Fernando Madrid", "Fernando", "12345", 18);
     }
 
     private void initVentana() {
 
         setSize(700, 600);
-        setTitle("JAVA TICKETS");
+        setTitle("JAVA TICKETS | LOGIN");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -75,43 +73,24 @@ public class Login extends JFrame {
 
     private void loginAction() {
 
-        boolean encontrado = false;
+        Usuarios encontrado = Usuarios.buscar(usuario.getText());
 
         if (usuario.getText().equals("") || password.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
-        if (usuario.getText().equals(admin.getUsuario())) {
-            if (password.getText().equals(admin.getPassword())) {
+        if (encontrado != null) {
+            if (password.getText().equals(encontrado.getPassword())) {
+                Usuarios.usuarioLogged = encontrado;
                 Usuarios.logged = true;
-                Usuarios.usuarioLogged = admin;
-                JOptionPane.showMessageDialog(null, "Logueado como Administrador", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Logueado como " + encontrado.getUsuario(), "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
                 new Sistema().setVisible(true);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "La contraseña es incorrecta!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
             }
-            return;
-        }
-
-        for (int i = 0; i < Usuarios.cantidadUsuarios; i++) {
-            if (Usuarios.usuarios[i] != null && usuario.getText().equals(Usuarios.usuarios[i].getUsuario())) {
-                encontrado = true;
-                if (password.getText().equals(Usuarios.usuarios[i].getPassword())) {
-                    Usuarios.logged = true;
-                    Usuarios.usuarioLogged = Usuarios.usuarios[i];
-                    JOptionPane.showMessageDialog(null, "Logueado como " + Usuarios.usuarios[i].getUsuario(), "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
-                    new Sistema().setVisible(true);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "La contraseña es incorrecta!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
-                }
-                return;
-            }
-        }
-
-        if (!encontrado) {
+        } else {
             JOptionPane.showMessageDialog(null, "Este usuario no existe!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
         }
 

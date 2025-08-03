@@ -2,6 +2,7 @@ package javatickets.ventanas;
 
 import java.awt.*;
 import javatickets.utilidades.Fondos;
+import javatickets.usuarios.Usuarios;
 import javax.swing.*;
 
 public class Sistema extends JFrame {
@@ -14,7 +15,7 @@ public class Sistema extends JFrame {
     private void initVentana() {
 
         setSize(700, 600);
-        setTitle("JAVA TICKETS");
+        setTitle("JAVA TICKETS | SISTEMA");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -40,6 +41,7 @@ public class Sistema extends JFrame {
         adusuarios.setFont(new Font("Kefa", Font.BOLD, 18));
         adusuarios.setCursor(new Cursor(Cursor.HAND_CURSOR));
         adusuarios.setForeground(Color.red);
+        adusuarios.addActionListener(e -> adUsuariosAction());
         
         reportes.setBounds(50, 400, 320, 60);
         reportes.setFont(new Font("Kefa", Font.BOLD, 20));
@@ -61,11 +63,24 @@ public class Sistema extends JFrame {
 
     }
     
+    private void adUsuariosAction(){       
+        
+       if(Usuarios.esAdmin(Usuarios.usuarioLogged)){
+           dispose();
+           new AdUsuarios().setVisible(true);
+       }else{
+           JOptionPane.showMessageDialog(null, "No eres administrador, no puedes entrar", "ADMINISTRAR USUARIOS", JOptionPane.INFORMATION_MESSAGE);
+       }
+        
+    }
+    
     private void salirAction() {
         
         dispose();
-        System.out.println("[CONSOLE LOG] Cerrando el programa...");
-        System.exit(0);
+        Usuarios.logged = false;
+        new Principal().setVisible(true);
+        /*System.out.println("[CONSOLE LOG] Cerrando el programa...");
+        System.exit(0);*/
         
     }
 
