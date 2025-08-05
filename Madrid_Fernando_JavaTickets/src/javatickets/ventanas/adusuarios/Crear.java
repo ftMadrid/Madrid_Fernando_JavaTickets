@@ -14,6 +14,7 @@ public class Crear extends JFrame {
     public Crear() {
         initVentana();
         initComponentes();
+
     }
 
     private void initVentana() {
@@ -102,57 +103,62 @@ public class Crear extends JFrame {
     private void crearAction() {
 
         int iedad;
-        
-        if(nombre.getText().equals("") || usuario.getText().equals("") || password.getText().equals("") || edad.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+        String nomb = nombre.getText().trim();
+        String user = usuario.getText().trim();
+        String pass = password.getText();
+
+        if (nombre.getText().equals("") || usuario.getText().equals("") || password.getText().equals("") || edad.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         try {
             iedad = Integer.parseInt(edad.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Solo se aceptan numeros enteros para la edad!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Solo se aceptan numeros enteros para la edad!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (Usuarios.buscar(usuario.getText()) == null) {
+        if (iedad <= 0 || iedad >= 100) {
+            JOptionPane.showMessageDialog(null, "Ingresa una edad valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        Usuarios target = Usuarios.buscar(usuario.getText());
+
+        if (target == null) {
             String seleccion = (String) tipo.getSelectedItem();
-            String tipouser = "";
             Usuarios nuevoUsuario = null;
 
             switch (seleccion) {
                 case "Administrador":
-                    nuevoUsuario = new Administrador(nombre.getText(), usuario.getText(), password.getText(), iedad);
-                    tipouser = "Administrador";
+                    nuevoUsuario = new Administrador(nomb, user, pass, iedad);
                     break;
                 case "Contenido":
-                    nuevoUsuario = new Contenidos(nombre.getText(), usuario.getText(), password.getText(), iedad);
-                    tipouser = "Contenidos";
+                    nuevoUsuario = new Contenidos(nomb, user, pass, iedad);
                     break;
                 case "Limitado":
-                    nuevoUsuario = new Limitado(nombre.getText(), usuario.getText(), password.getText(), iedad);
-                    tipouser = "Limitado";
+                    nuevoUsuario = new Limitado(nomb, user, pass, iedad);
                     break;
             }
 
             if (nuevoUsuario != null) {
-                
+
                 JOptionPane.showMessageDialog(null, "Usuario creado exitosamente!\n"
-                            +"\nNombre: "+nombre.getText()
-                            +"\nUsuario: "+usuario.getText()
-                            +"\nEdad: "+iedad+" años"
-                            +"\nTipo: "+tipouser, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
-                
+                        + "\nNombre: " + nombre.getText()
+                        + "\nUsuario: " + usuario.getText()
+                        + "\nEdad: " + iedad + " años"
+                        + "\nTipo: " + seleccion, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+
                 Usuarios.agregar(nuevoUsuario);
                 Usuarios.cantidadUsuarios++;
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Ya existe un miembro con ese usuario!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ya existe un miembro con ese usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         dispose();
         new AdUsuarios().setVisible(true);
 
@@ -163,20 +169,20 @@ public class Crear extends JFrame {
         new AdUsuarios().setVisible(true);
     }
 
-    private JLabel titulo = new JLabel();
-    private JTextField nombre = new JTextField();
-    private JTextField usuario = new JTextField();
-    private JTextField password = new JTextField();
-    private JTextField edad = new JTextField();
-    private JLabel nombreLabel = new JLabel("Nombre:");
-    private JLabel usuarioLabel = new JLabel("Usuario:");
-    private JLabel passwordLabel = new JLabel("Contraseña:");
-    private JLabel edadLabel = new JLabel("Edad:");
-    private JLabel tipoLabel = new JLabel("Tipo de Usuario:");
-    private JComboBox<String> tipo = new JComboBox<>(new String[]{"Administrador", "Contenido", "Limitado"});
-    private JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
-    private JButton salir = new JButton("REGRESAR");
-    private JButton crear = new JButton("CREAR");
+    private final JLabel titulo = new JLabel();
+    private final JTextField nombre = new JTextField();
+    private final JTextField usuario = new JTextField();
+    private final JTextField password = new JTextField();
+    private final JTextField edad = new JTextField();
+    private final JLabel nombreLabel = new JLabel("Nombre:");
+    private final JLabel usuarioLabel = new JLabel("Usuario:");
+    private final JLabel passwordLabel = new JLabel("Contraseña:");
+    private final JLabel edadLabel = new JLabel("Edad:");
+    private final JLabel tipoLabel = new JLabel("Tipo de Usuario:");
+    private final JComboBox<String> tipo = new JComboBox<>(new String[]{"Administrador", "Contenido", "Limitado"});
+    private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
+    private final JButton salir = new JButton("REGRESAR");
+    private final JButton crear = new JButton("CREAR");
 
     public static void main(String[] args) {
         new Crear().setVisible(true);

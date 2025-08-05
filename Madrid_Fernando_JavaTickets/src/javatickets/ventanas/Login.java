@@ -76,7 +76,7 @@ public class Login extends JFrame {
         Usuarios encontrado = Usuarios.buscar(usuario.getText());
 
         if (usuario.getText().equals("") || password.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -84,14 +84,14 @@ public class Login extends JFrame {
             if (password.getText().equals(encontrado.getPassword())) {
                 Usuarios.usuarioLogged = encontrado;
                 Usuarios.logged = true;
-                JOptionPane.showMessageDialog(null, "Logueado como " + encontrado.getUsuario(), "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Has iniciado sesion como " + encontrado.getUsuario(), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
                 new Sistema().setVisible(true);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "La contraseña es incorrecta!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "La contraseña es incorrecta!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Este usuario no existe!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Este usuario no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -102,13 +102,13 @@ public class Login extends JFrame {
         dispose();
     }
 
-    private JTextField usuario = new JTextField();
-    private JTextField password = new JTextField();
-    private JLabel userText = new JLabel("Usuario:");
-    private JLabel passText = new JLabel("Contraseña:");
-    private JLabel titulo = new JLabel();
-    private JButton aceptar = new JButton("ACEPTAR");
-    private JButton regresar = new JButton("REGRESAR");
+    private final JTextField usuario = new JTextField();
+    private final JTextField password = new JTextField();
+    private final JLabel userText = new JLabel("Usuario:");
+    private final JLabel passText = new JLabel("Contraseña:");
+    private final JLabel titulo = new JLabel();
+    private final JButton aceptar = new JButton("ACEPTAR");
+    private final JButton regresar = new JButton("REGRESAR");
     JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
 
     public static void main(String[] args) {

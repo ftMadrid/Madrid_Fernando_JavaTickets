@@ -65,11 +65,11 @@ public class Principal extends JFrame {
         System.exit(0);
     }
 
-    private JLabel titulo = new JLabel();
-    private JLabel permisos = new JLabel();
-    private JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
-    private JButton login = new JButton("LOGIN");
-    private JButton salir = new JButton("SALIR");
+    private final JLabel titulo = new JLabel();
+    private final JLabel permisos = new JLabel();
+    private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
+    private final JButton login = new JButton("LOGIN");
+    private final JButton salir = new JButton("SALIR");
 
     public static void main(String[] args) {
         new Principal().setVisible(true);

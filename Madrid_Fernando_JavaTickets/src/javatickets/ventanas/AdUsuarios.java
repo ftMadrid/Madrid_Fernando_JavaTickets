@@ -48,13 +48,13 @@ public class AdUsuarios extends JFrame {
         editar.addActionListener(e -> editarAction());
 
         borrar.setBounds(50, 400, 320, 60);
-        borrar.setFont(new Font("Kefa", Font.BOLD, 20));
+        borrar.setFont(new Font("Kefa", Font.BOLD, 18));
         borrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         borrar.setForeground(Color.red);
         borrar.addActionListener(e -> borrarAction());
 
         salir.setBounds(50, 475, 320, 60);
-        salir.setFont(new Font("Kefa", Font.BOLD, 20));
+        salir.setFont(new Font("Kefa", Font.BOLD, 18));
         salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         salir.setForeground(Color.red);
         salir.addActionListener(e -> salirAction());
@@ -91,13 +91,13 @@ public class AdUsuarios extends JFrame {
 
     }
 
-    private JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
-    private JLabel titulo = new JLabel();
-    private JLabel titulo2 = new JLabel();
-    private JButton crear = new JButton("CREAR USUARIO");
-    private JButton editar = new JButton("EDITAR USUARIO");
-    private JButton borrar = new JButton("BORRAR USUARIO");
-    private JButton salir = new JButton("REGRESAR");
+    private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
+    private final JLabel titulo = new JLabel();
+    private final JLabel titulo2 = new JLabel();
+    private final JButton crear = new JButton("CREAR USUARIO");
+    private final JButton editar = new JButton("EDITAR USUARIO");
+    private final JButton borrar = new JButton("BORRAR USUARIO");
+    private final JButton salir = new JButton("REGRESAR");
 
     public static void main(String[] args) {
         new AdUsuarios().setVisible(true);

@@ -69,7 +69,7 @@ public class Sistema extends JFrame {
            dispose();
            new AdUsuarios().setVisible(true);
        }else{
-           JOptionPane.showMessageDialog(null, "No eres administrador, no puedes entrar", "ADMINISTRAR USUARIOS", JOptionPane.INFORMATION_MESSAGE);
+           JOptionPane.showMessageDialog(null, "Solo los Administradores pueden ingresar aqui!", "ADMINISTRAR USUARIOS", JOptionPane.INFORMATION_MESSAGE);
        }
         
     }
@@ -84,12 +84,12 @@ public class Sistema extends JFrame {
         
     }
 
-    private JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
-    private JLabel titulo = new JLabel();
-    private JButton adeventos = new JButton("ADMINISTRACIÓN DE EVENTOS");
-    private JButton adusuarios = new JButton("ADMINISTRACIÓN DE USUARIOS");
-    private JButton reportes = new JButton("REPORTES");
-    private JButton salir = new JButton("SALIR");
+    private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
+    private final JLabel titulo = new JLabel();
+    private final JButton adeventos = new JButton("ADMINISTRACIÓN DE EVENTOS");
+    private final JButton adusuarios = new JButton("ADMINISTRACIÓN DE USUARIOS");
+    private final JButton reportes = new JButton("REPORTES");
+    private final JButton salir = new JButton("SALIR");
 
     public static void main(String[] args) {
         new Sistema().setVisible(true);
