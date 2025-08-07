@@ -6,7 +6,7 @@ import java.awt.Font;
 import javatickets.usuarios.Administrador;
 import javatickets.usuarios.Contenidos;
 import javatickets.usuarios.Limitado;
-import javatickets.usuarios.Usuarios;
+import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdUsuarios;
 import javax.swing.ImageIcon;
@@ -18,9 +18,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Editar extends JFrame {
+public class EditarUser extends JFrame {
 
-    public Editar() {
+    public EditarUser() {
         initVentana();
         initComponentes();
     }
@@ -130,11 +130,11 @@ public class Editar extends JFrame {
 
     }
 
-    private Usuarios original;
+    private UserManager original;
 
     private void buscarAction() {
 
-        Usuarios target = Usuarios.buscar(buscar.getText());
+        UserManager target = UserManager.buscar(buscar.getText());
         original = target;
 
         if (buscar.getText().equals("")) {
@@ -143,7 +143,7 @@ public class Editar extends JFrame {
         }
 
         if (target != null) {
-            if (buscar.getText().equals(Usuarios.usuarios.get(0).getUsuario())) {
+            if (buscar.getText().equals(UserManager.usuarios.get(0).getUsuario())) {
                 JOptionPane.showMessageDialog(null, "No puedes editar a este usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             } else {
                 nombre.setText(target.getNombre());
@@ -155,11 +155,11 @@ public class Editar extends JFrame {
                 edad.setText(String.valueOf(target.getEdad()));
                 edad.setEnabled(true);
 
-                if (Usuarios.esAdmin(target)) {
+                if (UserManager.esAdmin(target)) {
                     tipo.setSelectedItem("Administrador");
-                } else if (Usuarios.esContenido(target)) {
+                } else if (UserManager.esContenido(target)) {
                     tipo.setSelectedItem("Contenido");
-                } else if (Usuarios.esLimitado(target)) {
+                } else if (UserManager.esLimitado(target)) {
                     tipo.setSelectedItem("Limitado");
                 }
                 tipo.setEnabled(true);
@@ -187,7 +187,7 @@ public class Editar extends JFrame {
 
         int iedad;
 
-        Usuarios existente = Usuarios.buscar(usuario.getText());
+        UserManager existente = UserManager.buscar(usuario.getText());
 
         if (nombre.getText().equals("") || usuario.getText().equals("") || password.getText().equals("") || edad.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -213,7 +213,7 @@ public class Editar extends JFrame {
 
         String seleccion = (String) tipo.getSelectedItem();
 
-        Usuarios.editar(original, nombre.getText(), usuario.getText(), password.getText(), iedad, seleccion);
+        UserManager.editar(original, nombre.getText(), usuario.getText(), password.getText(), iedad, seleccion);
         JOptionPane.showMessageDialog(null, "Usuario editado exitosamente!\n"
                 + "\nNombre: " + nombre.getText()
                 + "\nUsuario: " + usuario.getText()
@@ -249,7 +249,7 @@ public class Editar extends JFrame {
     private final JButton buscarboton = new JButton("BUSCAR");
 
     public static void main(String[] args) {
-        new Editar().setVisible(true);
+        new EditarUser().setVisible(true);
     }
 
 }

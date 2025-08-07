@@ -1,6 +1,6 @@
 package javatickets.usuarios;
 
-public class Administrador extends Usuarios{
+public class Administrador extends UserManager{
     
     public Administrador() {
         super("Administrador", "admin", "supersecreto", 100);

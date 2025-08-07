@@ -2,7 +2,7 @@ package javatickets.ventanas;
 
 import java.awt.*;
 import javatickets.utilidades.Fondos;
-import javatickets.usuarios.Usuarios;
+import javatickets.usuarios.UserManager;
 import javax.swing.*;
 
 public class Sistema extends JFrame {
@@ -20,7 +20,7 @@ public class Sistema extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setLayout(null);
-        
+
     }
 
     private void initComponentes() {
@@ -35,14 +35,14 @@ public class Sistema extends JFrame {
         adeventos.setFont(new Font("Kefa", Font.BOLD, 18));
         adeventos.setCursor(new Cursor(Cursor.HAND_CURSOR));
         adeventos.setForeground(Color.red);
-        //adeventos.addActionListener(e -> botonAction());
-        
+        adeventos.addActionListener(e -> adEventosAction());
+
         adusuarios.setBounds(50, 325, 320, 60);
         adusuarios.setFont(new Font("Kefa", Font.BOLD, 18));
         adusuarios.setCursor(new Cursor(Cursor.HAND_CURSOR));
         adusuarios.setForeground(Color.red);
         adusuarios.addActionListener(e -> adUsuariosAction());
-        
+
         reportes.setBounds(50, 400, 320, 60);
         reportes.setFont(new Font("Kefa", Font.BOLD, 20));
         reportes.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -62,26 +62,32 @@ public class Sistema extends JFrame {
         add(panel);
 
     }
-    
-    private void adUsuariosAction(){       
-        
-       if(Usuarios.esAdmin(Usuarios.usuarioLogged)){
-           dispose();
-           new AdUsuarios().setVisible(true);
-       }else{
-           JOptionPane.showMessageDialog(null, "Solo los Administradores pueden ingresar aqui!", "ADMINISTRAR USUARIOS", JOptionPane.INFORMATION_MESSAGE);
-       }
-        
-    }
-    
-    private void salirAction() {
-        
+
+    private void adEventosAction() {
         dispose();
-        Usuarios.logged = false;
+        new AdEventos().setVisible(true);
+
+    }
+
+    private void adUsuariosAction() {
+
+        if (UserManager.esAdmin(UserManager.usuarioLogged)) {
+            dispose();
+            new AdUsuarios().setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Solo los Administradores pueden ingresar aqui!", "ADMINISTRAR USUARIOS", JOptionPane.WARNING_MESSAGE);
+        }
+
+    }
+
+    private void salirAction() {
+
+        dispose();
+        UserManager.logged = false;
         new Principal().setVisible(true);
         /*System.out.println("[CONSOLE LOG] Cerrando el programa...");
         System.exit(0);*/
-        
+
     }
 
     private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");

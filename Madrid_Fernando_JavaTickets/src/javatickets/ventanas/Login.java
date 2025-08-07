@@ -2,7 +2,7 @@ package javatickets.ventanas;
 
 import java.awt.*;
 import javatickets.usuarios.Administrador;
-import javatickets.usuarios.Usuarios;
+import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Fondos;
 import javax.swing.*;
 
@@ -73,7 +73,7 @@ public class Login extends JFrame {
 
     private void loginAction() {
 
-        Usuarios encontrado = Usuarios.buscar(usuario.getText());
+        UserManager encontrado = UserManager.buscar(usuario.getText());
 
         if (usuario.getText().equals("") || password.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -82,8 +82,8 @@ public class Login extends JFrame {
 
         if (encontrado != null) {
             if (password.getText().equals(encontrado.getPassword())) {
-                Usuarios.usuarioLogged = encontrado;
-                Usuarios.logged = true;
+                UserManager.usuarioLogged = encontrado;
+                UserManager.logged = true;
                 JOptionPane.showMessageDialog(null, "Has iniciado sesion como " + encontrado.getUsuario(), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
                 new Sistema().setVisible(true);
                 dispose();

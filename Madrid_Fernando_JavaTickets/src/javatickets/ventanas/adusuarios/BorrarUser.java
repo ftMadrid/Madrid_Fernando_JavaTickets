@@ -3,7 +3,7 @@ package javatickets.ventanas.adusuarios;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import javatickets.usuarios.Usuarios;
+import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdUsuarios;
 import javatickets.ventanas.Principal;
@@ -15,9 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Borrar extends JFrame {
+public class BorrarUser extends JFrame {
 
-    public Borrar() {
+    public BorrarUser() {
         initVentana();
         initComponentes();
 
@@ -72,7 +72,7 @@ public class Borrar extends JFrame {
 
     private void borrarAction() {
 
-        Usuarios target = Usuarios.buscar(usuario.getText());
+        UserManager target = UserManager.buscar(usuario.getText());
 
         if (usuario.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -80,14 +80,14 @@ public class Borrar extends JFrame {
         }
 
         if (target != null) {
-            if (usuario.getText().equals(Usuarios.usuarios.get(0).getUsuario())) {
+            if (usuario.getText().equals(UserManager.usuarios.get(0).getUsuario())) {
                 JOptionPane.showMessageDialog(null, "No puedes borrar a este usuario!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar al usuario " + usuario.getText() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
                 if (opcion == JOptionPane.YES_OPTION) {
-                    Usuarios.borrar(target);
+                    UserManager.borrar(target);
                     JOptionPane.showMessageDialog(null, "Se ha eliminado el usuario " + usuario.getText() + ".", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
-                    if (target.equals(Usuarios.usuarioLogged)) {
+                    if (target.equals(UserManager.usuarioLogged)) {
                         dispose();
                         new Principal().setVisible(true);
                     } else {
@@ -115,7 +115,7 @@ public class Borrar extends JFrame {
     private final JButton borrar = new JButton("BORRAR");
 
     public static void main(String[] args) {
-        new Borrar().setVisible(true);
+        new BorrarUser().setVisible(true);
     }
 
 }

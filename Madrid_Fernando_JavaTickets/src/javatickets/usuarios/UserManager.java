@@ -2,10 +2,10 @@ package javatickets.usuarios;
 
 import java.util.ArrayList;
 
-public class Usuarios {
+public class UserManager {
 
-    public static ArrayList<Usuarios> usuarios = new ArrayList<>();
-    public static Usuarios usuarioLogged = null;
+    public static ArrayList<UserManager> usuarios = new ArrayList<>();
+    public static UserManager usuarioLogged = null;
     public static boolean logged = false;
     public static int cantidadUsuarios = 1;
 
@@ -14,23 +14,23 @@ public class Usuarios {
     protected String password;
     protected int edad;
 
-    public Usuarios(String nombre, String usuario, String password, int edad) {
+    public UserManager(String nombre, String usuario, String password, int edad) {
         this.nombre = nombre;
         this.usuario = usuario;
         this.password = password;
         this.edad = edad;
     }
 
-    public static Usuarios buscar(String usuario) {
+    public static UserManager buscar(String usuario) {
         return buscarListado(usuario, 0);
     }
 
-    private static Usuarios buscarListado(String usuario, int indice) {
+    private static UserManager buscarListado(String usuario, int indice) {
         if (indice >= usuarios.size()) {
             return null;
         }
 
-        Usuarios encontrado = usuarios.get(indice);
+        UserManager encontrado = usuarios.get(indice);
 
         if (encontrado != null && usuario.equals(encontrado.getUsuario())) {
             return encontrado;
@@ -39,22 +39,22 @@ public class Usuarios {
         return buscarListado(usuario, indice + 1);
     }
 
-    public static void agregar(Usuarios nuevoUsuario) {
+    public static void agregar(UserManager nuevoUsuario) {
         usuarios.add(nuevoUsuario);
     }
 
-    public static void borrar(Usuarios user) {
+    public static void borrar(UserManager user) {
         usuarios.remove(user);
     }
 
-    public static void editar(Usuarios target, String nombre, String user, String password, int edad, String tipo) {
+    public static void editar(UserManager target, String nombre, String user, String password, int edad, String tipo) {
 
         int indice = usuarios.indexOf(target);
         if (indice == -1) {
             return;
         }
 
-        Usuarios editado = null;
+        UserManager editado = null;
 
         switch (tipo) {
             case "Administrador":
@@ -71,15 +71,15 @@ public class Usuarios {
         usuarios.set(indice, editado);
     }
 
-    public static boolean esAdmin(Usuarios user) {
+    public static boolean esAdmin(UserManager user) {
         return user instanceof Administrador;
     }
 
-    public static boolean esContenido(Usuarios user) {
+    public static boolean esContenido(UserManager user) {
         return user instanceof Contenidos;
     }
 
-    public static boolean esLimitado(Usuarios user) {
+    public static boolean esLimitado(UserManager user) {
         return user instanceof Limitado;
     }
 

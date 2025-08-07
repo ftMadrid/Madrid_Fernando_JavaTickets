@@ -4,14 +4,14 @@ import java.awt.*;
 import javatickets.usuarios.Administrador;
 import javatickets.usuarios.Contenidos;
 import javatickets.usuarios.Limitado;
-import javatickets.usuarios.Usuarios;
+import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdUsuarios;
 import javax.swing.*;
 
-public class Crear extends JFrame {
+public class CrearUser extends JFrame {
 
-    public Crear() {
+    public CrearUser() {
         initVentana();
         initComponentes();
 
@@ -124,11 +124,11 @@ public class Crear extends JFrame {
             return;
         }
 
-        Usuarios target = Usuarios.buscar(usuario.getText());
+        UserManager target = UserManager.buscar(usuario.getText());
 
         if (target == null) {
             String seleccion = (String) tipo.getSelectedItem();
-            Usuarios nuevoUsuario = null;
+            UserManager nuevoUsuario = null;
 
             switch (seleccion) {
                 case "Administrador":
@@ -150,8 +150,8 @@ public class Crear extends JFrame {
                         + "\nEdad: " + iedad + " años"
                         + "\nTipo: " + seleccion, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
-                Usuarios.agregar(nuevoUsuario);
-                Usuarios.cantidadUsuarios++;
+                UserManager.agregar(nuevoUsuario);
+                UserManager.cantidadUsuarios++;
             }
 
         } else {
@@ -185,7 +185,7 @@ public class Crear extends JFrame {
     private final JButton crear = new JButton("CREAR");
 
     public static void main(String[] args) {
-        new Crear().setVisible(true);
+        new CrearUser().setVisible(true);
     }
 
 }
