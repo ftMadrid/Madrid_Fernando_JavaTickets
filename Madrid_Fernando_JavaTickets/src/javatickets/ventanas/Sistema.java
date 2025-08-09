@@ -71,7 +71,7 @@ public class Sistema extends JFrame {
 
     private void adUsuariosAction() {
 
-        if (UserManager.esAdmin(UserManager.usuarioLogged)) {
+        if (UserManager.usuarioLogged.getTipo().equals("Administrador")) {
             dispose();
             new AdUsuarios().setVisible(true);
         } else {

@@ -2,7 +2,7 @@ package javatickets.usuarios;
 
 import java.util.ArrayList;
 
-public class UserManager {
+public abstract class UserManager {
 
     public static ArrayList<UserManager> usuarios = new ArrayList<>();
     public static UserManager usuarioLogged = null;
@@ -70,6 +70,8 @@ public class UserManager {
 
         usuarios.set(indice, editado);
     }
+    
+    public abstract String getTipo();
 
     public static boolean esAdmin(UserManager user) {
         return user instanceof Administrador;

@@ -6,4 +6,8 @@ public class Contenidos extends UserManager{
         super(nombre, usuario, password, edad);
     }
     
+    public String getTipo(){
+        return "Contenidos";
+    }
+    
 }

@@ -3,10 +3,7 @@ package javatickets.ventanas;
 import java.awt.*;
 import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Fondos;
-import javatickets.ventanas.adeventos.CrearEvento;
 import javatickets.ventanas.adusuarios.BorrarUser;
-import javatickets.ventanas.adusuarios.CrearUser;
-import javatickets.ventanas.adusuarios.EditarUser;
 import javax.swing.*;
 
 public class AdEventos extends JFrame {
@@ -78,7 +75,7 @@ public class AdEventos extends JFrame {
     }
 
     private void crearAction() {
-        if(UserManager.esLimitado(UserManager.usuarioLogged)){
+        if(UserManager.usuarioLogged.getTipo().equals("Limitado")){
             JOptionPane.showMessageDialog(null, "Los usuarios Limitados no pueden acceder aqui!", "ADMINISTRAR EVENTOS", JOptionPane.WARNING_MESSAGE);
         }else{
             dispose();
@@ -87,7 +84,7 @@ public class AdEventos extends JFrame {
     }
 
     private void editarAction() {
-        if(UserManager.esLimitado(UserManager.usuarioLogged)){
+        if(UserManager.usuarioLogged.getTipo().equals("Limitado")){
             JOptionPane.showMessageDialog(null, "Los usuarios Limitados no pueden acceder aqui!", "ADMINISTRAR EVENTOS", JOptionPane.WARNING_MESSAGE);
         }else{
             dispose();

@@ -9,4 +9,8 @@ public class Administrador extends UserManager{
     public Administrador(String nombre, String usuario, String password, int edad) {
         super(nombre, usuario, password, edad);
     }
+    
+    public String getTipo(){
+        return "Administrador";
+    }
 }
