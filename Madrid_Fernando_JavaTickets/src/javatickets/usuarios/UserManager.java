@@ -1,6 +1,7 @@
 package javatickets.usuarios;
 
 import java.util.ArrayList;
+import javatickets.utilidades.Enums;
 
 public abstract class UserManager {
 
@@ -71,7 +72,7 @@ public abstract class UserManager {
         usuarios.set(indice, editado);
     }
     
-    public abstract String getTipo();
+    public abstract Enums.TipoUsuarios getTipo();
 
     public static boolean esAdmin(UserManager user) {
         return user instanceof Administrador;

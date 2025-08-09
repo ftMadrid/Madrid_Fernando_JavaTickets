@@ -3,6 +3,7 @@ package javatickets.ventanas;
 import java.awt.*;
 import javatickets.utilidades.Fondos;
 import javatickets.usuarios.UserManager;
+import javatickets.utilidades.Enums;
 import javax.swing.*;
 
 public class Sistema extends JFrame {
@@ -71,7 +72,7 @@ public class Sistema extends JFrame {
 
     private void adUsuariosAction() {
 
-        if (UserManager.usuarioLogged.getTipo().equals("Administrador")) {
+        if (UserManager.usuarioLogged.getTipo() == Enums.TipoUsuarios.ADMINISTRADOR) {
             dispose();
             new AdUsuarios().setVisible(true);
         } else {

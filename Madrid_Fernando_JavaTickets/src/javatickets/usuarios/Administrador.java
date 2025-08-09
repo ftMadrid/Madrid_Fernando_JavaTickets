@@ -1,5 +1,7 @@
 package javatickets.usuarios;
 
+import javatickets.utilidades.Enums;
+
 public class Administrador extends UserManager{
     
     public Administrador() {
@@ -10,7 +12,8 @@ public class Administrador extends UserManager{
         super(nombre, usuario, password, edad);
     }
     
-    public String getTipo(){
-        return "Administrador";
+    @Override
+    public Enums.TipoUsuarios getTipo(){
+        return Enums.TipoUsuarios.ADMINISTRADOR;
     }
 }

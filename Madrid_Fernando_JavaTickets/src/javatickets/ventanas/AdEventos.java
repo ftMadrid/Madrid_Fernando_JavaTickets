@@ -2,6 +2,7 @@ package javatickets.ventanas;
 
 import java.awt.*;
 import javatickets.usuarios.UserManager;
+import javatickets.utilidades.Enums;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.adusuarios.BorrarUser;
 import javax.swing.*;
@@ -75,7 +76,7 @@ public class AdEventos extends JFrame {
     }
 
     private void crearAction() {
-        if(UserManager.usuarioLogged.getTipo().equals("Limitado")){
+        if(UserManager.usuarioLogged.getTipo() == Enums.TipoUsuarios.LIMITADO){
             JOptionPane.showMessageDialog(null, "Los usuarios Limitados no pueden acceder aqui!", "ADMINISTRAR EVENTOS", JOptionPane.WARNING_MESSAGE);
         }else{
             dispose();
@@ -84,7 +85,7 @@ public class AdEventos extends JFrame {
     }
 
     private void editarAction() {
-        if(UserManager.usuarioLogged.getTipo().equals("Limitado")){
+        if(UserManager.usuarioLogged.getTipo() == Enums.TipoUsuarios.LIMITADO){
             JOptionPane.showMessageDialog(null, "Los usuarios Limitados no pueden acceder aqui!", "ADMINISTRAR EVENTOS", JOptionPane.WARNING_MESSAGE);
         }else{
             dispose();
