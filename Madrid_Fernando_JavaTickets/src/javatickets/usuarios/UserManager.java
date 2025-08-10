@@ -122,5 +122,16 @@ public abstract class UserManager {
     public void setEdad(int edad) {
         this.edad = edad;
     }
-
+    
+    public static int getCantidadUsuarios(){
+        return cantidadUsuarios;
+    }
+    
+    public static void sumarUsuario(){
+        cantidadUsuarios++;
+    }
+    
+    public static void restarUsuario() {
+        cantidadUsuarios--;
+    }
 }

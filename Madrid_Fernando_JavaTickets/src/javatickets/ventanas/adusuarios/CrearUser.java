@@ -151,7 +151,7 @@ public class CrearUser extends JFrame {
                         + "\nTipo: " + seleccion, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
                 UserManager.agregar(nuevoUsuario);
-                UserManager.cantidadUsuarios++;
+                UserManager.sumarUsuario();
             }
 
         } else {
