@@ -210,7 +210,7 @@ public class CrearEvento extends JFrame {
 
         if (target == null) {
             if (!EventsManager.buscarFecha(day, month, year)) {
-                if (hoy.before(cal) || hoy.equals(cal)) {
+                if (cal.after(hoy)) {
                     EventsManager nuevoEvento = null;
 
                     switch (tipoevento) {
