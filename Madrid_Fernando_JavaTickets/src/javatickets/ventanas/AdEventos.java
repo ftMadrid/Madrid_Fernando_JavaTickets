@@ -4,6 +4,7 @@ import java.awt.*;
 import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Enums;
 import javatickets.utilidades.Fondos;
+import javatickets.ventanas.adeventos.CrearEvento;
 import javatickets.ventanas.adusuarios.BorrarUser;
 import javax.swing.*;
 
@@ -80,7 +81,7 @@ public class AdEventos extends JFrame {
             JOptionPane.showMessageDialog(null, "Los usuarios Limitados no pueden acceder aqui!", "ADMINISTRAR EVENTOS", JOptionPane.WARNING_MESSAGE);
         }else{
             dispose();
-            //new CrearEvento().setVisible(true);
+            new CrearEvento().setVisible(true);
         }
     }
 

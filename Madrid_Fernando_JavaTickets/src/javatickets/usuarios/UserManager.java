@@ -42,10 +42,12 @@ public abstract class UserManager {
 
     public static void agregar(UserManager nuevoUsuario) {
         usuarios.add(nuevoUsuario);
+        cantidadUsuarios++;
     }
 
     public static void borrar(UserManager user) {
         usuarios.remove(user);
+        cantidadUsuarios--;
     }
 
     public static void editar(UserManager target, String nombre, String user, String password, int edad, String tipo) {
@@ -125,13 +127,5 @@ public abstract class UserManager {
     
     public static int getCantidadUsuarios(){
         return cantidadUsuarios;
-    }
-    
-    public static void sumarUsuario(){
-        cantidadUsuarios++;
-    }
-    
-    public static void restarUsuario() {
-        cantidadUsuarios--;
     }
 }
