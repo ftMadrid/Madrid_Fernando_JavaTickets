@@ -3,7 +3,7 @@ package javatickets.eventos;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class EventsManager {
+public abstract class EventsManager {
 
     public static ArrayList<EventsManager> eventos = new ArrayList<>();
     public static int cantidadEventos;
@@ -67,6 +67,8 @@ public class EventsManager {
         eventos.add(e);
         cantidadEventos++;
     }
+    
+    public abstract String getSubTipo();
 
     public static int getCantidadEventos() {
         return cantidadEventos;

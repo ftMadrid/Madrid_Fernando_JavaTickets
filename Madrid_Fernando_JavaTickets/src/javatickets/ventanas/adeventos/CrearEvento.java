@@ -6,7 +6,9 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.util.Calendar;
 import java.util.Date;
+import javatickets.eventos.Deportivo;
 import javatickets.eventos.EventsManager;
+import javatickets.eventos.Musical;
 import javatickets.eventos.Religioso;
 import javatickets.utilidades.Enums;
 import javatickets.utilidades.Fondos;
@@ -159,26 +161,18 @@ public class CrearEvento extends JFrame {
         int icodigo;
         String nom = nombre.getText();
         String desc = descripcion.getText();
-        double irenta;
+        double irenta = Integer.parseInt(renta.getText());
         Date fechaEvento = fecha.getDate();
         Enums.TipoEventos tipoevento = (Enums.TipoEventos) tipo.getSelectedItem();
         String stringsubtipos = "";
-        Enums.TipoDeportes tipodeportes = (Enums.TipoDeportes) subtipo.getSelectedItem();
 
-        if (codigo.getText().equals("") || nom.equals("") || desc.equals("")) {
+        if (codigo.getText().equals("") || nom.equals("") || desc.equals("") || tipoevento == null) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (fechaEvento == null) {
             JOptionPane.showMessageDialog(null, "Debes seleccionar una fecha para el evento", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try {
-            irenta = Integer.parseInt(renta.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Solo se aceptan numeros enteros para el monto de renta", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -211,15 +205,19 @@ public class CrearEvento extends JFrame {
         if (target == null) {
             if (!EventsManager.buscarFecha(day, month, year)) {
                 if (cal.after(hoy)) {
+                    
                     EventsManager nuevoEvento = null;
 
                     switch (tipoevento) {
                         case DEPORTIVO:
-                            stringsubtipos = "\nTipo: " + tipodeportes.toString();
+                            Enums.TipoDeportes tipodeportes = (Enums.TipoDeportes) subtipo.getSelectedItem();
+                            nuevoEvento = new Deportivo(icodigo, nom, desc, day, month, year, tipodeportes);
+                            stringsubtipos = "\n| Tipo: " + tipodeportes.toString();
                             break;
                         case MUSICAL:
-                            subtipo.setEnabled(true);
-                            subtipo.setModel(new DefaultComboBoxModel<>(Enums.TipoMusica.values()));
+                            Enums.TipoMusica tipomusica = (Enums.TipoMusica) subtipo.getSelectedItem();
+                            nuevoEvento = new Musical(icodigo, nom, desc, day, month, year, tipomusica);
+                            stringsubtipos = "\n| Tipo: " + tipomusica.toString();
                             break;
                         case RELIGIOSO:
                             nuevoEvento = new Religioso(icodigo, nom, desc, day, month, year);
@@ -239,7 +237,7 @@ public class CrearEvento extends JFrame {
                         EventsManager.agregarEvento(nuevoEvento);
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "No puedes escoger esta fecha!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No puedes escoger esta fecha!", "ERROR", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -248,7 +246,7 @@ public class CrearEvento extends JFrame {
                 return;
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Ya existe un evento con este codigo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ya existe un evento con este codigo!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

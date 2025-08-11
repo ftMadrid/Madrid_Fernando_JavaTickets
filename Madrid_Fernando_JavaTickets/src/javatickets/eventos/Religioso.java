@@ -6,4 +6,8 @@ public class Religioso extends EventsManager{
         super(codigo, titulo, descripcion, day, month, year);
     }
     
+    public String getSubTipo(){
+        return null;
+    }
+    
 }
