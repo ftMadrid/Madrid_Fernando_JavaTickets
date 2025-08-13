@@ -237,7 +237,7 @@ public class CrearEvento extends JFrame {
         Calendar hoy = Calendar.getInstance();
         cal.setTime(fechaEvento);
         int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH) + 1;
+        int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         if (target == null) {
@@ -253,7 +253,7 @@ public class CrearEvento extends JFrame {
                                 return;
                             }
                             Enums.TipoDeportes tipodeportes = (Enums.TipoDeportes) subtipo.getSelectedItem();
-                            nuevoEvento = new Deportivo(icodigo, nom, desc, icantidadGente, day, month, year, tipodeportes);
+                            nuevoEvento = new Deportivo(icodigo, nom, desc, irenta, icantidadGente, day, month, year, tipodeportes);
                             stringsubtipos = "\n| Tipo: " + tipodeportes.toString();
                             break;
                         case MUSICAL:
@@ -262,7 +262,7 @@ public class CrearEvento extends JFrame {
                                 return;
                             }
                             Enums.TipoMusica tipomusica = (Enums.TipoMusica) subtipo.getSelectedItem();
-                            nuevoEvento = new Musical(icodigo, nom, desc, icantidadGente, day, month, year, tipomusica);
+                            nuevoEvento = new Musical(icodigo, nom, desc, irenta, icantidadGente, day, month, year, tipomusica);
                             stringsubtipos = "\n| Tipo: " + tipomusica.toString();
                             break;
                         case RELIGIOSO:
@@ -270,7 +270,7 @@ public class CrearEvento extends JFrame {
                                 JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
-                            nuevoEvento = new Religioso(icodigo, nom, desc, icantidadGente, day, month, year);
+                            nuevoEvento = new Religioso(icodigo, nom, desc, irenta, icantidadGente, day, month, year);
                             break;
                     }
 
@@ -283,7 +283,7 @@ public class CrearEvento extends JFrame {
                                 + "\n| Descripción: " + desc
                                 + String.format("\n| Monto de Renta: Lps.%.2f", irenta)
                                 + "\n| Cantidad de Personas: " + icantidadGente
-                                + "\n| Fecha del Evento: " + day + "/" + month + "/" + year, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                                + "\n| Fecha del Evento: " + day + "/" + (month+1) + "/" + year, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
                         EventsManager.agregarEvento(nuevoEvento);
                     }

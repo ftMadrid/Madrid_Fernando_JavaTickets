@@ -2,6 +2,7 @@ package javatickets.eventos;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import javatickets.utilidades.Enums;
 
 public abstract class EventsManager {
 
@@ -15,10 +16,11 @@ public abstract class EventsManager {
     protected double renta;
     protected int cantidadGente;
 
-    public EventsManager(int codigo, String titulo, String descripcion, int cantidadGente, int day, int month, int year) {
+    public EventsManager(int codigo, String titulo, String descripcion, double renta, int cantidadGente, int day, int month, int year) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.renta = renta;
         this.cantidadGente = cantidadGente;
         fechaEvento = Calendar.getInstance();
         fechaEvento.set(year, month, day);
@@ -69,6 +71,13 @@ public abstract class EventsManager {
         eventos.add(e);
         cantidadEventos++;
     }
+    
+    public static void eliminarEvento(EventsManager e) {
+        eventos.remove(e);
+        cantidadEventos--;
+    }
+    
+    public abstract Enums.TipoEventos getTipo();
     
     public abstract String getSubTipo();
 

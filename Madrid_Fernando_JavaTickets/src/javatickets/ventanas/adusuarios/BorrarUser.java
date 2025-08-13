@@ -25,7 +25,7 @@ public class BorrarUser extends JFrame {
 
     private void initVentana() {
 
-        setSize(700, 500);
+        setSize(600, 500);
         setTitle("JAVA TICKETS | BORRAR USUARIO");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -36,7 +36,7 @@ public class BorrarUser extends JFrame {
 
     private void initComponentes() {
 
-        panel.setSize(700, 500);
+        panel.setSize(600, 500);
         panel.setLayout(null);
 
         titulo.setBounds(-10, 50, 580, 118);

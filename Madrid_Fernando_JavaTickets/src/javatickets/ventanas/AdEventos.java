@@ -5,6 +5,7 @@ import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Enums;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.adeventos.CrearEvento;
+import javatickets.ventanas.adeventos.EliminarEvento;
 import javatickets.ventanas.adusuarios.BorrarUser;
 import javax.swing.*;
 
@@ -96,7 +97,7 @@ public class AdEventos extends JFrame {
 
     private void borrarAction() {
         dispose();
-        new BorrarUser().setVisible(true);
+        new EliminarEvento().setVisible(true);
     }
     
     private void verAction(){
