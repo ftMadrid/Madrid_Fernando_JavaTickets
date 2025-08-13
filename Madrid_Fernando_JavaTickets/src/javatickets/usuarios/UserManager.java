@@ -50,7 +50,7 @@ public abstract class UserManager {
         cantidadUsuarios--;
     }
 
-    public static void editar(UserManager target, String nombre, String user, String password, int edad, String tipo) {
+    public static void editar(UserManager target, String nombre, String user, String password, int edad, Enums.TipoUsuarios tipo) {
 
         int indice = usuarios.indexOf(target);
         if (indice == -1) {
@@ -60,13 +60,13 @@ public abstract class UserManager {
         UserManager editado = null;
 
         switch (tipo) {
-            case "Administrador":
+            case ADMINISTRADOR:
                 editado = new Administrador(nombre, user, password, edad);
                 break;
-            case "Contenido":
+            case CONTENIDO:
                 editado = new Contenidos(nombre, user, password, edad);
                 break;
-            case "Limitado":
+            case LIMITADO:
                 editado = new Limitado(nombre, user, password, edad);
                 break;
         }

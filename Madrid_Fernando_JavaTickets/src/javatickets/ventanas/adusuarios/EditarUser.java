@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import javatickets.usuarios.UserManager;
+import javatickets.utilidades.Enums;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdUsuarios;
 import javax.swing.ImageIcon;
@@ -152,12 +153,16 @@ public class EditarUser extends JFrame {
                 edad.setText(String.valueOf(target.getEdad()));
                 edad.setEnabled(true);
 
-                if (UserManager.esAdmin(target)) {
-                    tipo.setSelectedItem("Administrador");
-                } else if (UserManager.esContenido(target)) {
-                    tipo.setSelectedItem("Contenido");
-                } else if (UserManager.esLimitado(target)) {
-                    tipo.setSelectedItem("Limitado");
+                switch (target.getTipo()) {
+                    case ADMINISTRADOR:
+                        tipo.setSelectedItem(Enums.TipoUsuarios.ADMINISTRADOR);
+                        break;
+                    case CONTENIDO:
+                        tipo.setSelectedItem(Enums.TipoUsuarios.CONTENIDO);
+                        break;
+                    case LIMITADO:
+                        tipo.setSelectedItem(Enums.TipoUsuarios.LIMITADO);
+                        break;
                 }
                 tipo.setEnabled(true);
                 editar.setEnabled(true);
@@ -208,7 +213,7 @@ public class EditarUser extends JFrame {
             return;
         }
 
-        String seleccion = (String) tipo.getSelectedItem();
+        Enums.TipoUsuarios seleccion = (Enums.TipoUsuarios) tipo.getSelectedItem();
 
         UserManager.editar(original, nombre.getText(), usuario.getText(), password.getText(), iedad, seleccion);
         JOptionPane.showMessageDialog(null, "Usuario editado exitosamente!\n"
@@ -239,7 +244,7 @@ public class EditarUser extends JFrame {
     private final JLabel passwordLabel = new JLabel("Contraseña:");
     private final JLabel edadLabel = new JLabel("Edad:");
     private final JLabel tipoLabel = new JLabel("Tipo de Usuario:");
-    private final JComboBox<String> tipo = new JComboBox<>(new String[]{"Administrador", "Contenido", "Limitado"});
+    private final JComboBox<Enums.TipoUsuarios> tipo = new JComboBox<>(Enums.TipoUsuarios.values());
     private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
     private final JButton salir = new JButton("REGRESAR");
     private final JButton editar = new JButton("EDITAR");
