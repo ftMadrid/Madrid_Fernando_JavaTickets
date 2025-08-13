@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class CrearEvento extends JFrame {
 
@@ -73,11 +74,11 @@ public class CrearEvento extends JFrame {
         fecha.setBounds(380, 327, 280, 35);
         fecha.setFont(new Font("Kefa", Font.PLAIN, 18));
 
-        nombreLabel.setBounds(50, 370, 280, 40);
+        nombreLabel.setBounds(50, 375, 280, 40);
         nombreLabel.setFont(new Font("Kefa", Font.BOLD, 22));
         nombreLabel.setForeground(Color.WHITE);
 
-        nombre.setBounds(50, 405, 280, 40);
+        nombre.setBounds(50, 410, 280, 40);
         nombre.setFont(new Font("Kefa", Font.PLAIN, 18));
 
         descripcionLabel.setBounds(50, 455, 280, 40);
@@ -87,29 +88,40 @@ public class CrearEvento extends JFrame {
         descripcion.setBounds(50, 490, 280, 40);
         descripcion.setFont(new Font("Kefa", Font.PLAIN, 18));
 
+        lpsLabel.setBounds(50, 575, 280, 40);
+        lpsLabel.setFont(new Font("Kefa", Font.PLAIN, 22));
+        lpsLabel.setForeground(Color.WHITE);
+
         rentaLabel.setBounds(50, 540, 280, 40);
         rentaLabel.setFont(new Font("Kefa", Font.BOLD, 22));
         rentaLabel.setForeground(Color.WHITE);
 
-        renta.setBounds(50, 575, 280, 40);
+        renta.setBounds(100, 575, 230, 40);
         renta.setFont(new Font("Kefa", Font.PLAIN, 18));
 
-        subtipoLabel.setBounds(380, 370, 280, 40);
+        cantidadGenteLabel.setBounds(380, 375, 280, 40);
+        cantidadGenteLabel.setFont(new Font("Kefa", Font.BOLD, 22));
+        cantidadGenteLabel.setForeground(Color.WHITE);
+
+        cantidadGente.setBounds(380, 410, 280, 40);
+        cantidadGente.setFont(new Font("Kefa", Font.PLAIN, 18));
+
+        subtipoLabel.setBounds(380, 455, 280, 40);
         subtipoLabel.setFont(new Font("Kefa", Font.BOLD, 22));
         subtipoLabel.setForeground(Color.WHITE);
 
-        subtipo.setBounds(377, 400, 280, 50);
+        subtipo.setBounds(377, 490, 280, 50);
         subtipo.setFont(new Font("Kefa", Font.BOLD, 20));
         subtipo.setEnabled(false);
         subtipo.setSelectedItem(null);
 
-        crear.setBounds(380, 480, 150, 50);
+        crear.setBounds(380, 565, 150, 50);
         crear.setFont(new Font("Kefa", Font.BOLD, 18));
         crear.setCursor(new Cursor(Cursor.HAND_CURSOR));
         crear.setForeground(new Color(0, 153, 0));
         crear.addActionListener(e -> crearAction());
 
-        salir.setBounds(530, 480, 150, 50);
+        salir.setBounds(530, 565, 150, 50);
         salir.setFont(new Font("Kefa", Font.BOLD, 18));
         salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         salir.setForeground(Color.red);
@@ -121,6 +133,7 @@ public class CrearEvento extends JFrame {
         panel.add(codigo);
         panel.add(descripcion);
         panel.add(renta);
+        panel.add(cantidadGente);
         panel.add(tipo);
         panel.add(subtipo);
         panel.add(fechaLabel);
@@ -128,6 +141,8 @@ public class CrearEvento extends JFrame {
         panel.add(codigoLabel);
         panel.add(descripcionLabel);
         panel.add(rentaLabel);
+        panel.add(lpsLabel);
+        panel.add(cantidadGenteLabel);
         panel.add(tipoLabel);
         panel.add(subtipoLabel);
         panel.add(salir);
@@ -137,23 +152,31 @@ public class CrearEvento extends JFrame {
     }
 
     private void actualizarTipo() {
-
         Enums.TipoEventos ttipo = (Enums.TipoEventos) tipo.getSelectedItem();
 
-        switch (ttipo) {
-            case DEPORTIVO:
-                subtipo.setEnabled(true);
-                subtipo.setModel(new DefaultComboBoxModel<>(Enums.TipoDeportes.values()));
-                break;
-            case MUSICAL:
-                subtipo.setEnabled(true);
-                subtipo.setModel(new DefaultComboBoxModel<>(Enums.TipoMusica.values()));
-                break;
-            case RELIGIOSO:
-                subtipo.setEnabled(false);
-                subtipo.setSelectedItem(null);
-                break;
+        if (subtipo.isPopupVisible()) {
+            subtipo.hidePopup();
         }
+
+        SwingUtilities.invokeLater(() -> { // solo para evitar errores
+            switch (ttipo) {
+                case DEPORTIVO:
+                    subtipo.setEnabled(true);
+                    subtipo.setModel(new DefaultComboBoxModel<>(Enums.TipoDeportes.values()));
+                    subtipo.setSelectedIndex(0);
+                    break;
+                case MUSICAL:
+                    subtipo.setEnabled(true);
+                    subtipo.setModel(new DefaultComboBoxModel<>(Enums.TipoMusica.values()));
+                    subtipo.setSelectedIndex(0);
+                    break;
+                case RELIGIOSO:
+                    subtipo.setEnabled(false);
+                    subtipo.setModel(new DefaultComboBoxModel<>());
+                    subtipo.setSelectedIndex(0);
+                    break;
+            }
+        });
     }
 
     private void crearAction() {
@@ -161,12 +184,13 @@ public class CrearEvento extends JFrame {
         int icodigo;
         String nom = nombre.getText();
         String desc = descripcion.getText();
-        double irenta = Integer.parseInt(renta.getText());
+        double irenta;
+        int icantidadGente;
         Date fechaEvento = fecha.getDate();
         Enums.TipoEventos tipoevento = (Enums.TipoEventos) tipo.getSelectedItem();
         String stringsubtipos = "";
 
-        if (codigo.getText().equals("") || nom.equals("") || desc.equals("") || tipoevento == null) {
+        if (codigo.getText().isEmpty() || nom.isEmpty() || desc.isEmpty() || cantidadGente.getText().isEmpty() || tipoevento == null) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -176,8 +200,22 @@ public class CrearEvento extends JFrame {
             return;
         }
 
+        try {
+            irenta = Double.parseDouble(renta.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingresa un monto de renta válido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (irenta <= 0) {
             JOptionPane.showMessageDialog(null, "Ingresa un monto de renta valido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            icantidadGente = Integer.parseInt(cantidadGente.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingresa una cantidad de personas válida", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -205,22 +243,34 @@ public class CrearEvento extends JFrame {
         if (target == null) {
             if (!EventsManager.buscarFecha(day, month, year)) {
                 if (cal.after(hoy)) {
-                    
+
                     EventsManager nuevoEvento = null;
 
                     switch (tipoevento) {
                         case DEPORTIVO:
+                            if (icantidadGente <= 0 || icantidadGente > 20000) {
+                                JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
                             Enums.TipoDeportes tipodeportes = (Enums.TipoDeportes) subtipo.getSelectedItem();
-                            nuevoEvento = new Deportivo(icodigo, nom, desc, day, month, year, tipodeportes);
+                            nuevoEvento = new Deportivo(icodigo, nom, desc, icantidadGente, day, month, year, tipodeportes);
                             stringsubtipos = "\n| Tipo: " + tipodeportes.toString();
                             break;
                         case MUSICAL:
+                            if (icantidadGente <= 0 || icantidadGente > 25000) {
+                                JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
                             Enums.TipoMusica tipomusica = (Enums.TipoMusica) subtipo.getSelectedItem();
-                            nuevoEvento = new Musical(icodigo, nom, desc, day, month, year, tipomusica);
+                            nuevoEvento = new Musical(icodigo, nom, desc, icantidadGente, day, month, year, tipomusica);
                             stringsubtipos = "\n| Tipo: " + tipomusica.toString();
                             break;
                         case RELIGIOSO:
-                            nuevoEvento = new Religioso(icodigo, nom, desc, day, month, year);
+                            if (icantidadGente <= 0 || icantidadGente > 30000) {
+                                JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            nuevoEvento = new Religioso(icodigo, nom, desc, icantidadGente, day, month, year);
                             break;
                     }
 
@@ -232,11 +282,12 @@ public class CrearEvento extends JFrame {
                                 + "\n| Titulo: " + nom
                                 + "\n| Descripción: " + desc
                                 + String.format("\n| Monto de Renta: Lps.%.2f", irenta)
+                                + "\n| Cantidad de Personas: " + icantidadGente
                                 + "\n| Fecha del Evento: " + day + "/" + month + "/" + year, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
                         EventsManager.agregarEvento(nuevoEvento);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "No puedes escoger esta fecha!", "ERROR", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -269,12 +320,15 @@ public class CrearEvento extends JFrame {
     private final JTextField codigo = new JTextField();
     private final JTextField nombre = new JTextField();
     private final JTextField descripcion = new JTextField();
+    private final JTextField cantidadGente = new JTextField();
     private final JTextField renta = new JTextField();
     private final JLabel fechaLabel = new JLabel("Fecha del Evento:");
     private final JLabel codigoLabel = new JLabel("Codigo:");
     private final JLabel nombreLabel = new JLabel("Titulo del Evento:");
     private final JLabel descripcionLabel = new JLabel("Descripción:");
+    private final JLabel cantidadGenteLabel = new JLabel("Cantidad de Personas:");
     private final JLabel rentaLabel = new JLabel("Monto de la Renta:");
+    private final JLabel lpsLabel = new JLabel("Lps.");
     private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
     private final JButton salir = new JButton("REGRESAR");
     private final JButton crear = new JButton("CREAR");

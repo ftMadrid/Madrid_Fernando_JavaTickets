@@ -1,6 +1,6 @@
 package javatickets.utilidades;
 
-public class Enums {
+public final class Enums {
     
     public enum TipoUsuarios {
         

@@ -6,8 +6,8 @@ public class Deportivo extends EventsManager{
     
     private Enums.TipoDeportes tipo;
     
-    public Deportivo(int codigo, String titulo, String descripcion, int day, int month, int year, Enums.TipoDeportes tipo){
-        super(codigo, titulo, descripcion, day, month, year);
+    public Deportivo(int codigo, String titulo, String descripcion, int cantidadGente, int day, int month, int year, Enums.TipoDeportes tipo){
+        super(codigo, titulo, descripcion, cantidadGente, day, month, year);
         this.tipo = tipo;
     }
     

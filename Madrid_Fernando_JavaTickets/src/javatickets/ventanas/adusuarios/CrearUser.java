@@ -5,9 +5,12 @@ import javatickets.usuarios.Administrador;
 import javatickets.usuarios.Contenidos;
 import javatickets.usuarios.Limitado;
 import javatickets.usuarios.UserManager;
+import javatickets.utilidades.Enums;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdUsuarios;
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 public class CrearUser extends JFrame {
 
@@ -106,6 +109,7 @@ public class CrearUser extends JFrame {
         String nomb = nombre.getText().trim();
         String user = usuario.getText().trim();
         String pass = password.getText();
+        Enums.TipoUsuarios seleccion = (Enums.TipoUsuarios) tipo.getSelectedItem();
 
         if (nombre.getText().equals("") || usuario.getText().equals("") || password.getText().equals("") || edad.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -127,17 +131,17 @@ public class CrearUser extends JFrame {
         UserManager target = UserManager.buscar(usuario.getText());
 
         if (target == null) {
-            String seleccion = (String) tipo.getSelectedItem();
+
             UserManager nuevoUsuario = null;
 
             switch (seleccion) {
-                case "Administrador":
+                case ADMINISTRADOR:
                     nuevoUsuario = new Administrador(nomb, user, pass, iedad);
                     break;
-                case "Contenido":
+                case CONTENIDO:
                     nuevoUsuario = new Contenidos(nomb, user, pass, iedad);
                     break;
-                case "Limitado":
+                case LIMITADO:
                     nuevoUsuario = new Limitado(nomb, user, pass, iedad);
                     break;
             }
@@ -178,7 +182,7 @@ public class CrearUser extends JFrame {
     private final JLabel passwordLabel = new JLabel("Contraseña:");
     private final JLabel edadLabel = new JLabel("Edad:");
     private final JLabel tipoLabel = new JLabel("Tipo de Usuario:");
-    private final JComboBox<String> tipo = new JComboBox<>(new String[]{"Administrador", "Contenido", "Limitado"});
+    private final JComboBox<Enums.TipoUsuarios> tipo = new JComboBox<>(Enums.TipoUsuarios.values());
     private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
     private final JButton salir = new JButton("REGRESAR");
     private final JButton crear = new JButton("CREAR");

@@ -13,11 +13,13 @@ public abstract class EventsManager {
     protected String descripcion;
     protected Calendar fechaEvento;
     protected double renta;
+    protected int cantidadGente;
 
-    public EventsManager(int codigo, String titulo, String descripcion, int day, int month, int year) {
+    public EventsManager(int codigo, String titulo, String descripcion, int cantidadGente, int day, int month, int year) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.cantidadGente = cantidadGente;
         fechaEvento = Calendar.getInstance();
         fechaEvento.set(year, month, day);
     }
