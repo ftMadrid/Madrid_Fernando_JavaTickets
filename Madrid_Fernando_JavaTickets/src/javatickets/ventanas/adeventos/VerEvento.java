@@ -135,26 +135,26 @@ public class VerEvento extends JFrame {
         categoria.setFont(new Font("Kefa", Font.PLAIN, 18));
         categoria.setEditable(false);
         categoria.setText("N/A");
-        
+
         estadoLabel.setBounds(380, 540, 280, 40);
         estadoLabel.setFont(new Font("Kefa", Font.BOLD, 22));
         estadoLabel.setForeground(Color.WHITE);
-        
+
         estado.setBounds(380, 575, 280, 40);
         estado.setFont(new Font("Kefa", Font.PLAIN, 18));
         estado.setEditable(false);
         estado.setText("N/A");
-        
+
         multaLabel.setBounds(710, 540, 280, 40);
         multaLabel.setFont(new Font("Kefa", Font.BOLD, 22));
         multaLabel.setForeground(Color.WHITE);
         multaLabel.setVisible(false);
-        
+
         lps2Label.setBounds(710, 575, 280, 40);
         lps2Label.setFont(new Font("Kefa", Font.PLAIN, 22));
         lps2Label.setForeground(Color.WHITE);
         lps2Label.setVisible(false);
-        
+
         multa.setBounds(760, 575, 230, 40);
         multa.setFont(new Font("Kefa", Font.PLAIN, 18));
         multa.setEditable(false);
@@ -195,6 +195,8 @@ public class VerEvento extends JFrame {
 
     }
 
+    private EventsManager original;
+
     private void buscarAction() {
 
         int icod;
@@ -212,10 +214,7 @@ public class VerEvento extends JFrame {
         }
 
         EventsManager target = EventsManager.buscar(icod);
-        
-        Calendar fechaEvento = target.getFechaEvento();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaFormat = formato.format(fechaEvento.getTime());
+        original = target;
 
         if (buscar.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Tienes que ingresar el codigo de un evento para buscarlo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -223,6 +222,11 @@ public class VerEvento extends JFrame {
         }
 
         if (target != null) {
+
+            Calendar fechaEvento = target.getFechaEvento();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaFormat = formato.format(fechaEvento.getTime());
+
             evento.setText(String.valueOf(target.getTipo()));
             nombre.setText(target.getTitulo());
             descripcion.setText(target.getDescripcion());
@@ -230,10 +234,10 @@ public class VerEvento extends JFrame {
             cantidadGente.setText(String.valueOf(target.getCantidadGente()));
             fecha.setText(fechaFormat);
             categoria.setText(String.valueOf(target.getSubTipo()));
-            
-            if(target.getEstado()){
+
+            if (target.getEstado()) {
                 estado.setText("Vigente");
-            }else{
+            } else {
                 estado.setText("Cancelado");
                 multaLabel.setVisible(true);
                 lps2Label.setVisible(true);
