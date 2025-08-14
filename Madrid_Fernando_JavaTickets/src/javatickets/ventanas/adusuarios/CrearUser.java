@@ -9,8 +9,6 @@ import javatickets.utilidades.Enums;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdUsuarios;
 import javax.swing.*;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
 
 public class CrearUser extends JFrame {
 

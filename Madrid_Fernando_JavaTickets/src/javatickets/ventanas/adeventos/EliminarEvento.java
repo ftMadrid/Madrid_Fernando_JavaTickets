@@ -1,19 +1,11 @@
 package javatickets.ventanas.adeventos;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
 import javatickets.eventos.EventsManager;
 import javatickets.utilidades.Calculos;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdEventos;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 public class EliminarEvento extends JFrame {
 

@@ -1,20 +1,11 @@
 package javatickets.ventanas;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import javatickets.usuarios.UserManager;
-import javatickets.utilidades.Enums;
+import javax.swing.*;
+import java.awt.*;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.reportes.EventosCancelados;
 import javatickets.ventanas.reportes.EventosFuturos;
 import javatickets.ventanas.reportes.EventosRealizados;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 public class Reportes extends JFrame {
 

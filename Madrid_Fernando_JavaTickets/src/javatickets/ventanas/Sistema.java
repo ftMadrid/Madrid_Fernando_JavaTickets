@@ -1,10 +1,10 @@
 package javatickets.ventanas;
 
-import java.awt.*;
 import javatickets.utilidades.Fondos;
 import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Enums;
 import javax.swing.*;
+import java.awt.*;
 
 public class Sistema extends JFrame {
 

@@ -1,19 +1,11 @@
 package javatickets.ventanas.adusuarios;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
 import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdUsuarios;
 import javatickets.ventanas.Principal;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 
 public class BorrarUser extends JFrame {
 

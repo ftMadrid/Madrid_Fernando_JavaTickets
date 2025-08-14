@@ -1,34 +1,12 @@
 package javatickets.ventanas.adeventos;
 
-import com.toedter.calendar.JDateChooser;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import javatickets.eventos.Deportivo;
 import javatickets.eventos.EventsManager;
-import javatickets.eventos.Musical;
-import javatickets.eventos.Religioso;
-import javatickets.usuarios.UserManager;
-import javatickets.utilidades.Enums;
-import static javatickets.utilidades.Enums.TipoEventos.DEPORTIVO;
-import static javatickets.utilidades.Enums.TipoEventos.MUSICAL;
-import static javatickets.utilidades.Enums.TipoEventos.RELIGIOSO;
+import javax.swing.*;
+import java.awt.*;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdEventos;
-import javatickets.ventanas.AdUsuarios;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 public class VerEvento extends JFrame {
 
