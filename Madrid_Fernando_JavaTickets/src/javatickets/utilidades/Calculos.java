@@ -45,15 +45,12 @@ public final class Calculos {
             }
         }
 
-        // Mensaje de cancelación
         JOptionPane.showMessageDialog(null,
                 "Se ha cancelado el evento " + target.getTitulo() + "\n"
                         + ".\nEstado: Cancelado" 
                         +String.format("\nIndemnización cobrada: Lps.%.2f", indemnizacion), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
-        // Eliminar evento
         EventsManager.eliminarEvento(target);
-
         return indemnizacion;
     }
 

@@ -95,6 +95,7 @@ public class EliminarEvento extends JFrame {
             if (opcion == JOptionPane.YES_OPTION) {
                 indemnizacion = calculos.cobrarIndemnizacion(icodigo);
                 calculos.agregarSaldo(indemnizacion);
+                target.setIndemnizacion(indemnizacion);
                 dispose();
                 new AdEventos().setVisible(true);
             }

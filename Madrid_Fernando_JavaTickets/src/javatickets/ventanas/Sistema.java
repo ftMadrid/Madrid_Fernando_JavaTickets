@@ -48,6 +48,7 @@ public class Sistema extends JFrame {
         reportes.setFont(new Font("Kefa", Font.BOLD, 20));
         reportes.setCursor(new Cursor(Cursor.HAND_CURSOR));
         reportes.setForeground(Color.red);
+        reportes.addActionListener(e -> reportesAction());
 
         salir.setBounds(50, 475, 320, 60);
         salir.setFont(new Font("Kefa", Font.BOLD, 20));
@@ -79,6 +80,11 @@ public class Sistema extends JFrame {
             JOptionPane.showMessageDialog(null, "Solo los Administradores pueden ingresar aqui!", "ADMINISTRAR USUARIOS", JOptionPane.WARNING_MESSAGE);
         }
 
+    }
+    
+    private void reportesAction() {
+        dispose();
+        new Reportes().setVisible(true);
     }
 
     private void salirAction() {

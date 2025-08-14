@@ -158,7 +158,7 @@ public class CrearEvento extends JFrame {
             subtipo.hidePopup();
         }
 
-        SwingUtilities.invokeLater(() -> { // solo para evitar errores
+        SwingUtilities.invokeLater(() -> { // solo para evitar errores de out o bounds
             switch (ttipo) {
                 case DEPORTIVO:
                     subtipo.setEnabled(true);
@@ -283,7 +283,7 @@ public class CrearEvento extends JFrame {
                                 + "\n| Descripción: " + desc
                                 + String.format("\n| Monto de Renta: Lps.%.2f", irenta)
                                 + "\n| Cantidad de Personas: " + icantidadGente
-                                + "\n| Fecha del Evento: " + day + "/" + (month+1) + "/" + year, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                                + "\n| Fecha del Evento: " + day + "/" + (month + 1) + "/" + year, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
                         EventsManager.agregarEvento(nuevoEvento);
                     }

@@ -16,8 +16,8 @@ public class Musical extends EventsManager{
         return Enums.TipoEventos.MUSICAL;
     }
     
-    public String getSubTipo(){
-        return tipo.toString();
+    public Enums.TipoMusica getSubTipo(){
+        return tipo;
     }
     
 }

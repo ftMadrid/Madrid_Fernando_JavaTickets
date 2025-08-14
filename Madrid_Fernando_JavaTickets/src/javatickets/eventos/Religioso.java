@@ -13,6 +13,7 @@ public class Religioso extends EventsManager{
         return Enums.TipoEventos.RELIGIOSO;
     }
     
+    @Override
     public String getSubTipo(){
         return null;
     }

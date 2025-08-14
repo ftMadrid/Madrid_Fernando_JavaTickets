@@ -7,6 +7,7 @@ import javatickets.utilidades.Enums;
 public abstract class EventsManager {
 
     public static ArrayList<EventsManager> eventos = new ArrayList<>();
+    public static ArrayList<EventsManager> eventosCancelados = new ArrayList<>();
     public static int cantidadEventos;
 
     protected int codigo;
@@ -15,6 +16,8 @@ public abstract class EventsManager {
     protected Calendar fechaEvento;
     protected double renta;
     protected int cantidadGente;
+    protected boolean estado;
+    protected double indemnizacion;
 
     public EventsManager(int codigo, String titulo, String descripcion, double renta, int cantidadGente, int day, int month, int year) {
         this.codigo = codigo;
@@ -22,6 +25,8 @@ public abstract class EventsManager {
         this.descripcion = descripcion;
         this.renta = renta;
         this.cantidadGente = cantidadGente;
+        estado = true;
+        indemnizacion = 0;
         fechaEvento = Calendar.getInstance();
         fechaEvento.set(year, month, day);
     }
@@ -72,14 +77,38 @@ public abstract class EventsManager {
         cantidadEventos++;
     }
     
+    public static void editarEvento(EventsManager target, String titulo, String descripcion, double renta, int cantidadGente, int day, int month, int year) {
+
+        int indice = eventos.indexOf(target);
+        if (indice == -1) {
+            return;
+        }
+
+        EventsManager editado = null;
+
+        switch (target.getTipo()) {
+            case DEPORTIVO:
+                editado = new Deportivo(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year, (Enums.TipoDeportes) target.getSubTipo());
+                break;
+            case MUSICAL:
+                editado = new Musical(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year, (Enums.TipoMusica) target.getSubTipo());
+                break;
+            case RELIGIOSO:
+                editado = new Religioso(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year);
+                break;
+        }
+
+        eventos.set(indice, editado);
+    }
+    
     public static void eliminarEvento(EventsManager e) {
-        eventos.remove(e);
-        cantidadEventos--;
+        eventosCancelados.add(e);
+        e.setEstado(false);
     }
     
     public abstract Enums.TipoEventos getTipo();
     
-    public abstract String getSubTipo();
+    public abstract Object getSubTipo();
 
     public static int getCantidadEventos() {
         return cantidadEventos;
@@ -103,6 +132,26 @@ public abstract class EventsManager {
 
     public double getRenta() {
         return renta;
+    }
+    
+    public int getCantidadGente(){
+        return cantidadGente;
+    }
+    
+    public boolean getEstado() {
+        return estado;
+    }
+    
+    public void setEstado(boolean estado){
+        this.estado = estado;
+    }
+    
+    public void setIndemnizacion(double monto) {
+        indemnizacion = monto;
+    }
+    
+    public double getIndemnizacion() {
+        return indemnizacion;
     }
 
 }
