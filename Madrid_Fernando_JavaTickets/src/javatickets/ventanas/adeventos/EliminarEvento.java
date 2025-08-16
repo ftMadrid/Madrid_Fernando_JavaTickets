@@ -96,7 +96,7 @@ public class EliminarEvento extends JFrame {
                 JOptionPane.showMessageDialog(null, "El evento con codigo [" + icodigo + "] ya esta cancelado!", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "El evento con codigo [" + icodigo + "] no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El evento con codigo {" + icodigo + "] no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
     }
