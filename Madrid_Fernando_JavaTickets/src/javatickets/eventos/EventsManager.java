@@ -88,7 +88,8 @@ public abstract class EventsManager {
 
         switch (target.getTipo()) {
             case DEPORTIVO:
-                editado = new Deportivo(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year, (Enums.TipoDeportes) target.getSubTipo());
+                Deportivo depTarget = (Deportivo) target;
+                editado = new Deportivo(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year, (Enums.TipoDeportes) target.getSubTipo(), depTarget.getEquipo1(), depTarget.getEquipo2());
                 break;
             case MUSICAL:
                 editado = new Musical(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year, (Enums.TipoMusica) target.getSubTipo());

@@ -5,6 +5,11 @@ import java.util.Calendar;
 import javatickets.eventos.EventsManager;
 import javax.swing.*;
 import java.awt.*;
+import javatickets.eventos.Deportivo;
+import javatickets.utilidades.Enums;
+import static javatickets.utilidades.Enums.TipoEventos.DEPORTIVO;
+import static javatickets.utilidades.Enums.TipoEventos.MUSICAL;
+import static javatickets.utilidades.Enums.TipoEventos.RELIGIOSO;
 import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdEventos;
 
@@ -17,7 +22,7 @@ public class VerEvento extends JFrame {
 
     private void initVentana() {
 
-        setSize(1000, 700);
+        setSize(1100, 700);
         setTitle("JAVA TICKETS | VER EVENTO");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -28,7 +33,7 @@ public class VerEvento extends JFrame {
 
     private void initComponentes() {
 
-        panel.setSize(1000, 700);
+        panel.setSize(1100, 700);
         panel.setLayout(null);
 
         titulo.setBounds(-10, 50, 560, 137);
@@ -137,6 +142,25 @@ public class VerEvento extends JFrame {
         multa.setFont(new Font("Kefa", Font.PLAIN, 18));
         multa.setEditable(false);
         multa.setVisible(false);
+        
+        //DEPORTIVO
+        equipo1Label.setBounds(710, 290, 280, 40);
+        equipo1Label.setFont(new Font("Kefa", Font.BOLD, 22));
+        equipo1Label.setForeground(Color.WHITE);
+        equipo1Label.setVisible(false);
+
+        equipo1.setBounds(710, 327, 280, 40);
+        equipo1.setFont(new Font("Kefa", Font.PLAIN, 18));
+        equipo1.setVisible(false);
+
+        equipo2Label.setBounds(710, 375, 280, 40);
+        equipo2Label.setFont(new Font("Kefa", Font.BOLD, 22));
+        equipo2Label.setForeground(Color.WHITE);
+        equipo2Label.setVisible(false);
+
+        equipo2.setBounds(710, 410, 280, 40);
+        equipo2.setFont(new Font("Kefa", Font.PLAIN, 18));
+        equipo2.setVisible(false);
 
         salir.setBounds(750, 450, 150, 50);
         salir.setFont(new Font("Kefa", Font.BOLD, 18));
@@ -169,11 +193,15 @@ public class VerEvento extends JFrame {
         panel.add(multaLabel);
         panel.add(salir);
         panel.add(buscarboton);
+        panel.add(equipo1Label);
+        panel.add(equipo1);
+        panel.add(equipo2Label);
+        panel.add(equipo2);
         add(panel);
 
     }
-
-    private EventsManager original;
+    
+    EventsManager original;
 
     private void buscarAction() {
 
@@ -222,6 +250,32 @@ public class VerEvento extends JFrame {
                 multa.setText(String.format("%.2f", target.getIndemnizacion()));
                 multa.setVisible(true);
             }
+            
+            switch (target.getTipo()) {
+                case DEPORTIVO:
+                    Deportivo depTarget = (Deportivo) target;
+                    equipo1Label.setVisible(true);
+                    equipo1.setVisible(true);
+                    equipo1.setText(depTarget.getEquipo1());
+                    equipo2Label.setVisible(true);
+                    equipo2.setVisible(true);
+                    equipo2.setText(depTarget.getEquipo2());
+                    break;
+
+                case MUSICAL:
+                    equipo1Label.setVisible(false);
+                    equipo1.setVisible(false);
+                    equipo2Label.setVisible(false);
+                    equipo2.setVisible(false);
+                    break;
+
+                case RELIGIOSO:
+                    equipo1Label.setVisible(false);
+                    equipo1.setVisible(false);
+                    equipo2Label.setVisible(false);
+                    equipo2.setVisible(false);
+                    break;
+            }
 
             JOptionPane.showMessageDialog(null, "Viendo el evento " + target.getTitulo(), "MODO INSPECCIÓN", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -269,6 +323,12 @@ public class VerEvento extends JFrame {
     private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
     private final JButton salir = new JButton("REGRESAR");
     private final JButton buscarboton = new JButton("BUSCAR");
+    
+    //Extras
+    private final JLabel equipo1Label = new JLabel("Nombre del Equipo 1:");
+    private final JLabel equipo2Label = new JLabel("Nombre del Equipo 2:");
+    private final JTextField equipo1 = new JTextField();
+    private final JTextField equipo2 = new JTextField();
 
     public static void main(String[] args) {
         new VerEvento().setVisible(true);

@@ -83,13 +83,17 @@ public class EliminarEvento extends JFrame {
         }
 
         if (target != null) {
-            int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar el evento " + target.getTitulo() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.YES_OPTION) {
-                indemnizacion = calculos.cobrarIndemnizacion(icodigo);
-                calculos.agregarSaldo(indemnizacion);
-                target.setIndemnizacion(indemnizacion);
-                dispose();
-                new AdEventos().setVisible(true);
+            if (target.getEstado()) {
+                int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar el evento " + target.getTitulo() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    indemnizacion = calculos.cobrarIndemnizacion(icodigo);
+                    calculos.agregarSaldo(indemnizacion);
+                    target.setIndemnizacion(indemnizacion);
+                    dispose();
+                    new AdEventos().setVisible(true);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "El evento con codigo [" + icodigo + "] ya esta cancelado!", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "El evento con codigo [" + icodigo + "] no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);

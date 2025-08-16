@@ -22,7 +22,7 @@ public class CrearEvento extends JFrame {
 
     private void initVentana() {
 
-        setSize(700, 700);
+        setSize(1100, 700);
         setTitle("JAVA TICKETS | CREAR EVENTO");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -33,7 +33,7 @@ public class CrearEvento extends JFrame {
 
     private void initComponentes() {
 
-        panel.setSize(700, 700);
+        panel.setSize(1100, 700);
         panel.setLayout(null);
 
         titulo.setBounds(-10, 50, 600, 128);
@@ -103,13 +103,32 @@ public class CrearEvento extends JFrame {
         subtipo.setEnabled(false);
         subtipo.setSelectedItem(null);
 
-        crear.setBounds(380, 565, 150, 50);
+        //DEPORTIVO
+        equipo1Label.setBounds(710, 290, 280, 40);
+        equipo1Label.setFont(new Font("Kefa", Font.BOLD, 22));
+        equipo1Label.setForeground(Color.WHITE);
+        equipo1Label.setVisible(false);
+
+        equipo1.setBounds(710, 327, 280, 40);
+        equipo1.setFont(new Font("Kefa", Font.PLAIN, 18));
+        equipo1.setVisible(false);
+
+        equipo2Label.setBounds(710, 375, 280, 40);
+        equipo2Label.setFont(new Font("Kefa", Font.BOLD, 22));
+        equipo2Label.setForeground(Color.WHITE);
+        equipo2Label.setVisible(false);
+
+        equipo2.setBounds(710, 410, 280, 40);
+        equipo2.setFont(new Font("Kefa", Font.PLAIN, 18));
+        equipo2.setVisible(false);
+
+        crear.setBounds(710, 565, 150, 50);
         crear.setFont(new Font("Kefa", Font.BOLD, 18));
         crear.setCursor(new Cursor(Cursor.HAND_CURSOR));
         crear.setForeground(new Color(0, 153, 0));
         crear.addActionListener(e -> crearAction());
 
-        salir.setBounds(530, 565, 150, 50);
+        salir.setBounds(860, 565, 150, 50);
         salir.setFont(new Font("Kefa", Font.BOLD, 18));
         salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         salir.setForeground(Color.red);
@@ -135,6 +154,10 @@ public class CrearEvento extends JFrame {
         panel.add(subtipoLabel);
         panel.add(salir);
         panel.add(crear);
+        panel.add(equipo1Label);
+        panel.add(equipo1);
+        panel.add(equipo2Label);
+        panel.add(equipo2);
         add(panel);
 
     }
@@ -146,22 +169,42 @@ public class CrearEvento extends JFrame {
             subtipo.hidePopup();
         }
 
-        SwingUtilities.invokeLater(() -> { // solo para evitar errores de out o bounds
+        SwingUtilities.invokeLater(() -> {
             switch (ttipo) {
                 case DEPORTIVO:
+                    equipo1Label.setVisible(true);
+                    equipo1.setVisible(true);
+                    equipo2Label.setVisible(true);
+                    equipo2.setVisible(true);
+
                     subtipo.setEnabled(true);
                     subtipo.setModel(new DefaultComboBoxModel<>(Enums.TipoDeportes.values()));
-                    subtipo.setSelectedIndex(0);
+                    if (subtipo.getItemCount() > 0) {
+                        subtipo.setSelectedIndex(0);
+                    }
                     break;
+
                 case MUSICAL:
+                    equipo1Label.setVisible(false);
+                    equipo1.setVisible(false);
+                    equipo2Label.setVisible(false);
+                    equipo2.setVisible(false);
+
                     subtipo.setEnabled(true);
                     subtipo.setModel(new DefaultComboBoxModel<>(Enums.TipoMusica.values()));
-                    subtipo.setSelectedIndex(0);
+                    if (subtipo.getItemCount() > 0) {
+                        subtipo.setSelectedIndex(0);
+                    }
                     break;
+
                 case RELIGIOSO:
+                    equipo1Label.setVisible(false);
+                    equipo1.setVisible(false);
+                    equipo2Label.setVisible(false);
+                    equipo2.setVisible(false);
+
                     subtipo.setEnabled(false);
                     subtipo.setModel(new DefaultComboBoxModel<>());
-                    subtipo.setSelectedIndex(0);
                     break;
             }
         });
@@ -177,6 +220,8 @@ public class CrearEvento extends JFrame {
         Date fechaEvento = fecha.getDate();
         Enums.TipoEventos tipoevento = (Enums.TipoEventos) tipo.getSelectedItem();
         String stringsubtipos = "";
+        String ep1 = equipo1.getText();
+        String ep2 = equipo2.getText();
 
         if (codigo.getText().isEmpty() || nom.isEmpty() || desc.isEmpty() || cantidadGente.getText().isEmpty() || tipoevento == null) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -222,7 +267,6 @@ public class CrearEvento extends JFrame {
         EventsManager target = EventsManager.buscar(icodigo);
 
         Calendar cal = Calendar.getInstance();
-        Calendar hoy = Calendar.getInstance();
         cal.setTime(fechaEvento);
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
@@ -230,54 +274,49 @@ public class CrearEvento extends JFrame {
 
         if (target == null) {
             if (!EventsManager.buscarFecha(day, month, year)) {
-                if (cal.after(hoy)) {
 
-                    EventsManager nuevoEvento = null;
+                EventsManager nuevoEvento = null;
 
-                    switch (tipoevento) {
-                        case DEPORTIVO:
-                            if (icantidadGente <= 0 || icantidadGente > 20000) {
-                                JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                return;
-                            }
-                            Enums.TipoDeportes tipodeportes = (Enums.TipoDeportes) subtipo.getSelectedItem();
-                            nuevoEvento = new Deportivo(icodigo, nom, desc, irenta, icantidadGente, day, month, year, tipodeportes);
-                            stringsubtipos = "\n| Tipo: " + tipodeportes.toString();
-                            break;
-                        case MUSICAL:
-                            if (icantidadGente <= 0 || icantidadGente > 25000) {
-                                JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                return;
-                            }
-                            Enums.TipoMusica tipomusica = (Enums.TipoMusica) subtipo.getSelectedItem();
-                            nuevoEvento = new Musical(icodigo, nom, desc, irenta, icantidadGente, day, month, year, tipomusica);
-                            stringsubtipos = "\n| Tipo: " + tipomusica.toString();
-                            break;
-                        case RELIGIOSO:
-                            if (icantidadGente <= 0 || icantidadGente > 30000) {
-                                JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
-                                return;
-                            }
-                            nuevoEvento = new Religioso(icodigo, nom, desc, irenta, icantidadGente, day, month, year);
-                            break;
-                    }
+                switch (tipoevento) {
+                    case DEPORTIVO:
+                        if (icantidadGente <= 0 || icantidadGente > 20000) {
+                            JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        Enums.TipoDeportes tipodeportes = (Enums.TipoDeportes) subtipo.getSelectedItem();
+                        nuevoEvento = new Deportivo(icodigo, nom, desc, irenta, icantidadGente, day, month, year, tipodeportes, ep1, ep2);
+                        stringsubtipos = "\n| Tipo: " + tipodeportes.toString();
+                        break;
+                    case MUSICAL:
+                        if (icantidadGente <= 0 || icantidadGente > 25000) {
+                            JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        Enums.TipoMusica tipomusica = (Enums.TipoMusica) subtipo.getSelectedItem();
+                        nuevoEvento = new Musical(icodigo, nom, desc, irenta, icantidadGente, day, month, year, tipomusica);
+                        stringsubtipos = "\n| Tipo: " + tipomusica.toString();
+                        break;
+                    case RELIGIOSO:
+                        if (icantidadGente <= 0 || icantidadGente > 30000) {
+                            JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        nuevoEvento = new Religioso(icodigo, nom, desc, irenta, icantidadGente, day, month, year);
+                        break;
+                }
 
-                    if (nuevoEvento != null) {
-                        JOptionPane.showMessageDialog(null, "Evento creado exitosamente!\n"
-                                + "\n| Evento: " + tipoevento
-                                + stringsubtipos
-                                + "\n| Codigo: " + icodigo
-                                + "\n| Titulo: " + nom
-                                + "\n| Descripción: " + desc
-                                + String.format("\n| Monto de Renta: Lps.%.2f", irenta)
-                                + "\n| Cantidad de Personas: " + icantidadGente
-                                + "\n| Fecha del Evento: " + day + "/" + (month + 1) + "/" + year, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                if (nuevoEvento != null) {
+                    JOptionPane.showMessageDialog(null, "Evento creado exitosamente!\n"
+                            + "\n| Evento: " + tipoevento
+                            + stringsubtipos
+                            + "\n| Codigo: " + icodigo
+                            + "\n| Titulo: " + nom
+                            + "\n| Descripción: " + desc
+                            + String.format("\n| Monto de Renta: Lps.%.2f", irenta)
+                            + "\n| Cantidad de Personas: " + icantidadGente
+                            + "\n| Fecha del Evento: " + day + "/" + (month + 1) + "/" + year, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
-                        EventsManager.agregarEvento(nuevoEvento);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "No puedes escoger esta fecha!", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    return;
+                    EventsManager.agregarEvento(nuevoEvento);
                 }
 
             } else {
@@ -290,7 +329,9 @@ public class CrearEvento extends JFrame {
         }
 
         dispose();
-        new AdEventos().setVisible(true);
+
+        new AdEventos()
+                .setVisible(true);
 
     }
 
@@ -320,6 +361,12 @@ public class CrearEvento extends JFrame {
     private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
     private final JButton salir = new JButton("REGRESAR");
     private final JButton crear = new JButton("CREAR");
+
+    //Extras
+    private final JLabel equipo1Label = new JLabel("Nombre del Equipo 1:");
+    private final JLabel equipo2Label = new JLabel("Nombre del Equipo 2:");
+    private final JTextField equipo1 = new JTextField();
+    private final JTextField equipo2 = new JTextField();
 
     public static void main(String[] args) {
         new CrearEvento().setVisible(true);
