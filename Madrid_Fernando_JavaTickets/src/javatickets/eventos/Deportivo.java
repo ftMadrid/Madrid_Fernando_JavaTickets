@@ -9,8 +9,8 @@ public class Deportivo extends EventsManager{
     private String equipo1;
     private String equipo2;
     
-    public ArrayList<Deportivo> jugadores1 = new ArrayList<>();
-    public ArrayList<Deportivo> jugadores2 = new ArrayList<>();
+    public ArrayList<String> jugadores1 = new ArrayList<>();
+    public ArrayList<String> jugadores2 = new ArrayList<>();
     
     public Deportivo(int codigo, String titulo, String descripcion, double renta, int cantidadGente, int day, int month, int year, Enums.TipoDeportes tipo, String equipo1, String equipo2){
         super(codigo, titulo, descripcion, renta, cantidadGente, day, month, year);
@@ -30,6 +30,22 @@ public class Deportivo extends EventsManager{
 
     public String getEquipo2() {
         return equipo2;
+    }
+    
+    public ArrayList<String> getJugadores1() {
+        return jugadores1;
+    }
+
+    public void setJugadores1(ArrayList<String> jugadores1) {
+        this.jugadores1 = jugadores1;
+    }
+
+    public ArrayList<String> getJugadores2() {
+        return jugadores2;
+    }
+
+    public void setJugadores2(ArrayList<String> jugadores2) {
+        this.jugadores2 = jugadores2;
     }
     
     @Override

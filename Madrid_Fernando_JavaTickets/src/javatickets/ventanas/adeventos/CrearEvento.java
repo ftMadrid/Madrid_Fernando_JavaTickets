@@ -236,26 +236,31 @@ public class CrearEvento extends JFrame {
         try {
             irenta = Double.parseDouble(renta.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Ingresa un monto de renta válido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresa un monto de renta valido!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (irenta <= 0) {
-            JOptionPane.showMessageDialog(null, "Ingresa un monto de renta valido", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresa un monto de renta valido!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             icantidadGente = Integer.parseInt(cantidadGente.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Ingresa una cantidad de personas válida", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresa una cantidad de personas valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if(icantidadGente <= 0 ){
+            JOptionPane.showMessageDialog(null, "Ingresa una cantidad de personas valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             icodigo = Integer.parseInt(codigo.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Solo se aceptan numeros enteros para el codigo", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Solo se aceptan numeros enteros para el codigo!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

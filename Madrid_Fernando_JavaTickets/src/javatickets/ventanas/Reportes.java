@@ -6,6 +6,7 @@ import javatickets.utilidades.Fondos;
 import javatickets.ventanas.reportes.EventosCancelados;
 import javatickets.ventanas.reportes.EventosFuturos;
 import javatickets.ventanas.reportes.EventosRealizados;
+import javatickets.ventanas.reportes.VerPerfil;
 
 public class Reportes extends JFrame {
 
@@ -60,6 +61,7 @@ public class Reportes extends JFrame {
         perfiluser.setFont(new Font("Kefa", Font.BOLD, 18));
         perfiluser.setCursor(new Cursor(Cursor.HAND_CURSOR));
         perfiluser.setForeground(Color.red);
+        perfiluser.addActionListener(e -> verPerfilAction());
 
         salir.setBounds(50, 575, 320, 60);
         salir.setFont(new Font("Kefa", Font.BOLD, 18));
@@ -92,6 +94,11 @@ public class Reportes extends JFrame {
     private void eventosCanceladosAction() {
         dispose();
         new EventosCancelados().setVisible(true);
+    }
+    
+    private void verPerfilAction(){
+        dispose();
+        new VerPerfil().setVisible(true);
     }
 
     private void salirAction() {

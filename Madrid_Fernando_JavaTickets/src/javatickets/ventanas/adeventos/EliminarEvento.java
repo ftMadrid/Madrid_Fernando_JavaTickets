@@ -6,6 +6,8 @@ import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdEventos;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Calendar;
+import javatickets.usuarios.UserManager;
 
 public class EliminarEvento extends JFrame {
 
@@ -64,6 +66,8 @@ public class EliminarEvento extends JFrame {
 
     private void borrarAction() {
 
+        Calendar hoy = Calendar.getInstance();
+
         int icodigo;
         Calculos calculos = new Calculos();
         double indemnizacion;
@@ -83,17 +87,27 @@ public class EliminarEvento extends JFrame {
         }
 
         if (target != null) {
-            if (target.getEstado()) {
-                int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar el evento " + target.getTitulo() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
-                if (opcion == JOptionPane.YES_OPTION) {
-                    indemnizacion = calculos.cobrarIndemnizacion(icodigo);
-                    calculos.agregarSaldo(indemnizacion);
-                    target.setIndemnizacion(indemnizacion);
-                    dispose();
-                    new AdEventos().setVisible(true);
+            if (target.getEstado()) { // chequeo del estado
+                if (target.getCreador() == UserManager.usuarioLogged || UserManager.usuarioLogged == UserManager.usuarios.get(0)) { // chequeo si es el mismo usuariio que creo el evento
+                    if (target.getFechaEvento().after(hoy)) {
+
+                        int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar el evento " + target.getTitulo() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
+                        if (opcion == JOptionPane.YES_OPTION) {
+                            indemnizacion = calculos.cobrarIndemnizacion(icodigo);
+                            calculos.agregarSaldo(indemnizacion);
+                            target.setIndemnizacion(indemnizacion);
+                            dispose();
+                            new AdEventos().setVisible(true);
+
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No puedes cancelar este evento porque ya se realizó!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puedes cancelar este evento porque no eres el creador!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "El evento con codigo [" + icodigo + "] ya esta cancelado!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "El evento con codigo [" + icodigo + "] ya esta cancelado!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "El evento con codigo {" + icodigo + "] no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);

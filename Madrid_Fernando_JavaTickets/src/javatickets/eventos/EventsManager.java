@@ -2,6 +2,7 @@ package javatickets.eventos;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Enums;
 
 public abstract class EventsManager {
@@ -18,6 +19,7 @@ public abstract class EventsManager {
     protected int cantidadGente;
     protected boolean estado;
     protected double indemnizacion;
+    protected UserManager creador;
 
     public EventsManager(int codigo, String titulo, String descripcion, double renta, int cantidadGente, int day, int month, int year) {
         this.codigo = codigo;
@@ -26,6 +28,7 @@ public abstract class EventsManager {
         this.renta = renta;
         this.cantidadGente = cantidadGente;
         estado = true;
+        creador = UserManager.usuarioLogged;
         indemnizacion = 0;
         fechaEvento = Calendar.getInstance();
         fechaEvento.set(year, month, day);
@@ -60,7 +63,7 @@ public abstract class EventsManager {
         }
 
         EventsManager encontrado = eventos.get(indice);
-        if (encontrado != null) {
+        if (encontrado != null && encontrado.getEstado()) {
             Calendar fecha = encontrado.fechaEvento;
             if (fecha.get(Calendar.DAY_OF_MONTH) == day
                     && fecha.get(Calendar.MONTH) == month
@@ -71,44 +74,48 @@ public abstract class EventsManager {
 
         return buscarListadoFecha(day, month, year, indice + 1);
     }
-    
-    public static void agregarEvento(EventsManager e) {
-        eventos.add(e);
+
+    public static void agregarEvento(EventsManager evento) {
+        eventos.add(evento);
+        UserManager.usuarioLogged.eventoCreado(evento);
         cantidadEventos++;
     }
-    
+
     public static void editarEvento(EventsManager target, String titulo, String descripcion, double renta, int cantidadGente, int day, int month, int year) {
 
-        int indice = eventos.indexOf(target);
-        if (indice == -1) {
-            return;
+        target.setTitulo(titulo);
+        target.setDescripcion(descripcion);
+
+        if (target.getRenta() != renta) {
+            switch (target.getTipo()) {
+                case DEPORTIVO:
+                    target.setRenta(renta);
+                    break;
+                case MUSICAL:
+                    target.setRenta(renta * 0.3);
+                    break;
+                case RELIGIOSO:
+                    target.setRenta(renta + 2000);
+                    break;
+            }
+        } else {
+            target.setRenta(renta);
         }
 
-        EventsManager editado = null;
+        target.setCantidadGente(cantidadGente);
+        Calendar nuevaFecha = Calendar.getInstance();
+        nuevaFecha.set(year, month, day);
+        target.setFechaEvento(nuevaFecha);
 
-        switch (target.getTipo()) {
-            case DEPORTIVO:
-                Deportivo depTarget = (Deportivo) target;
-                editado = new Deportivo(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year, (Enums.TipoDeportes) target.getSubTipo(), depTarget.getEquipo1(), depTarget.getEquipo2());
-                break;
-            case MUSICAL:
-                editado = new Musical(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year, (Enums.TipoMusica) target.getSubTipo());
-                break;
-            case RELIGIOSO:
-                editado = new Religioso(target.getCodigo(), titulo, descripcion, renta, cantidadGente, day, month, year);
-                break;
-        }
+    }
 
-        eventos.set(indice, editado);
+    public static void eliminarEvento(EventsManager evento) {
+        eventosCancelados.add(evento);
+        evento.setEstado(false);
     }
-    
-    public static void eliminarEvento(EventsManager e) {
-        eventosCancelados.add(e);
-        e.setEstado(false);
-    }
-    
+
     public abstract Enums.TipoEventos getTipo();
-    
+
     public abstract Object getSubTipo();
 
     public static int getCantidadEventos() {
@@ -123,34 +130,58 @@ public abstract class EventsManager {
         return titulo;
     }
 
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Calendar getFechaEvento() {
         return fechaEvento;
     }
 
+    public void setFechaEvento(Calendar fechaEvento) {
+        this.fechaEvento = fechaEvento;
+    }
+
     public double getRenta() {
         return renta;
     }
-    
-    public int getCantidadGente(){
+
+    public void setRenta(double renta) {
+        this.renta = renta;
+    }
+
+    public int getCantidadGente() {
         return cantidadGente;
     }
-    
+
+    public void setCantidadGente(int cantidadGente) {
+        this.cantidadGente = cantidadGente;
+    }
+
     public boolean getEstado() {
         return estado;
     }
-    
-    public void setEstado(boolean estado){
+
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
+
+    public UserManager getCreador() {
+        return creador;
+    }
+
     public void setIndemnizacion(double monto) {
         indemnizacion = monto;
     }
-    
+
     public double getIndemnizacion() {
         return indemnizacion;
     }

@@ -5,12 +5,17 @@ import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Enums;
 import javax.swing.*;
 import java.awt.*;
+import javatickets.eventos.Deportivo;
+import javatickets.eventos.EventsManager;
+import javatickets.eventos.Musical;
+import javatickets.eventos.Religioso;
 
 public class Sistema extends JFrame {
 
     public Sistema() {
         initVentana();
         initComponentes();
+        
     }
 
     private void initVentana() {
