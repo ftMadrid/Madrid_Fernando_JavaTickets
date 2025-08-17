@@ -21,6 +21,23 @@ public class Musical extends EventsManager{
         this.integrantes = integrantes;
     }
     
+    public String getListaIntegrantes() {
+        
+        if(integrantes.isEmpty()){
+            return "";
+        }
+        
+        String info = "";
+        info += "Listado: \n";
+        info += "\n";
+        for(String listado : integrantes){
+            info += "| "+listado+"\n";
+        }
+        
+        return info;
+        
+    }
+    
     @Override
     public Enums.TipoEventos getTipo(){
         return Enums.TipoEventos.MUSICAL;

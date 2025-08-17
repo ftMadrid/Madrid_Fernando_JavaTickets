@@ -80,6 +80,8 @@ public class BorrarUser extends JFrame {
                     UserManager.borrar(target);
                     JOptionPane.showMessageDialog(null, "Se ha eliminado el usuario " + usuario.getText() + ".", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
                     if (target.equals(UserManager.usuarioLogged)) {
+                        UserManager.usuarioLogged = null;
+                        UserManager.logged = false;
                         dispose();
                         new Principal().setVisible(true);
                     } else {

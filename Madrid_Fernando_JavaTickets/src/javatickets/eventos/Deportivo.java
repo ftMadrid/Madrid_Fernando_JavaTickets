@@ -48,6 +48,30 @@ public class Deportivo extends EventsManager{
         this.jugadores2 = jugadores2;
     }
     
+    public String getListadoJugadores() {
+        
+        if(jugadores1.isEmpty() && jugadores2.isEmpty()){
+            return "";
+        }
+        
+        String info = "";
+        
+        info += "Integrantes del "+equipo1+": \n";
+        info += "\n";
+        for(String jugador : jugadores1) {
+            info += "| "+jugador+"\n";
+        }
+        
+        info += "\nIntegrantes del "+equipo2+": \n";
+        info += "\n";
+        for(String jugador : jugadores2) {
+            info += "| "+jugador+"\n";
+        }
+        
+        return info;
+        
+    }
+    
     @Override
     public Enums.TipoEventos getTipo(){
         return Enums.TipoEventos.DEPORTIVO;

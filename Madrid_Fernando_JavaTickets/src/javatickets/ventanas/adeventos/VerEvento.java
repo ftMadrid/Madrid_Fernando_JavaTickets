@@ -6,6 +6,8 @@ import javatickets.eventos.EventsManager;
 import javax.swing.*;
 import java.awt.*;
 import javatickets.eventos.Deportivo;
+import javatickets.eventos.Musical;
+import javatickets.usuarios.UserManager;
 import static javatickets.utilidades.Enums.TipoEventos.DEPORTIVO;
 import static javatickets.utilidades.Enums.TipoEventos.MUSICAL;
 import static javatickets.utilidades.Enums.TipoEventos.RELIGIOSO;
@@ -143,14 +145,15 @@ public class VerEvento extends JFrame {
         multa.setVisible(false);
         
         //DEPORTIVO
-        equipo1Label.setBounds(710, 290, 280, 40);
+        equipo1Label.setBounds(710, 288, 280, 40);
         equipo1Label.setFont(new Font("Kefa", Font.BOLD, 22));
         equipo1Label.setForeground(Color.WHITE);
         equipo1Label.setVisible(false);
 
-        equipo1.setBounds(710, 327, 280, 40);
+        equipo1.setBounds(710, 324, 280, 40);
         equipo1.setFont(new Font("Kefa", Font.PLAIN, 18));
         equipo1.setVisible(false);
+        equipo1.setEditable(false);
 
         equipo2Label.setBounds(710, 375, 280, 40);
         equipo2Label.setFont(new Font("Kefa", Font.BOLD, 22));
@@ -160,13 +163,28 @@ public class VerEvento extends JFrame {
         equipo2.setBounds(710, 410, 280, 40);
         equipo2.setFont(new Font("Kefa", Font.PLAIN, 18));
         equipo2.setVisible(false);
+        equipo2.setEditable(false);
 
         salir.setBounds(500, 210, 150, 40);
         salir.setFont(new Font("Kefa", Font.BOLD, 18));
         salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         salir.setForeground(Color.red);
         salir.addActionListener(e -> salirAction());
-
+        
+        listajugadoresboton.setBounds(710, 485, 280, 50);
+        listajugadoresboton.setFont(new Font("Kefa", Font.BOLD, 18));
+        listajugadoresboton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listajugadoresboton.setForeground(new Color(104, 87, 250));
+        listajugadoresboton.addActionListener(e -> listaJugadoresAction());
+        listajugadoresboton.setVisible(false);
+        
+        listaintegrantesboton.setBounds(710, 315, 280, 50);
+        listaintegrantesboton.setFont(new Font("Kefa", Font.BOLD, 18));
+        listaintegrantesboton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        listaintegrantesboton.setForeground(new Color(104, 87, 250));
+        listaintegrantesboton.addActionListener(e -> listaIntegrantesAction());
+        listaintegrantesboton.setVisible(false);
+        
         panel.add(titulo);
         panel.add(fecha);
         panel.add(buscar);
@@ -196,9 +214,13 @@ public class VerEvento extends JFrame {
         panel.add(equipo1);
         panel.add(equipo2Label);
         panel.add(equipo2);
+        panel.add(listajugadoresboton);
+        panel.add(listaintegrantesboton);
         add(panel);
 
     }
+    
+    private EventsManager global;
 
     private void buscarAction() {
 
@@ -218,6 +240,7 @@ public class VerEvento extends JFrame {
         }
 
         EventsManager target = EventsManager.buscar(icod);
+        global = target;
 
         if (buscar.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Tienes que ingresar el codigo de un evento para buscarlo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -259,6 +282,7 @@ public class VerEvento extends JFrame {
             
             switch (target.getTipo()) {
                 case DEPORTIVO:
+                    listaintegrantesboton.setVisible(false);
                     Deportivo depTarget = (Deportivo) target;
                     equipo1Label.setVisible(true);
                     equipo1.setVisible(true);
@@ -266,6 +290,7 @@ public class VerEvento extends JFrame {
                     equipo2Label.setVisible(true);
                     equipo2.setVisible(true);
                     equipo2.setText(depTarget.getEquipo2());
+                    listajugadoresboton.setVisible(true);
                     break;
 
                 case MUSICAL:
@@ -273,9 +298,13 @@ public class VerEvento extends JFrame {
                     equipo1.setVisible(false);
                     equipo2Label.setVisible(false);
                     equipo2.setVisible(false);
+                    listajugadoresboton.setVisible(false);
+                    listaintegrantesboton.setVisible(true);
                     break;
 
                 case RELIGIOSO:
+                    listaintegrantesboton.setVisible(false);
+                    listajugadoresboton.setVisible(false);
                     equipo1Label.setVisible(false);
                     equipo1.setVisible(false);
                     equipo2Label.setVisible(false);
@@ -297,6 +326,46 @@ public class VerEvento extends JFrame {
             estado.setText("N/A");
         }
 
+    }
+    
+    private void listaJugadoresAction() {
+        
+        Deportivo depEvento = (Deportivo) global;
+        
+        if (depEvento.getListadoJugadores().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "No hay jugadores para poder listarlos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JTextArea area = new JTextArea(depEvento.getListadoJugadores());
+            area.setEditable(false);
+            area.setFont(new Font("Kefa", Font.PLAIN, 14));
+            JScrollPane scroll = new JScrollPane(area);
+            scroll.setPreferredSize(new Dimension(300, 300));
+
+            JOptionPane.showMessageDialog(null, scroll,
+                    "Lista de Jugadores", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    }
+    
+    private void listaIntegrantesAction() {
+        
+        Musical depEvento = (Musical) global;
+        
+        if (depEvento.getListaIntegrantes().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "No hay integrantes para poder listarlos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JTextArea area = new JTextArea(depEvento.getListaIntegrantes());
+            area.setEditable(false);
+            area.setFont(new Font("Kefa", Font.PLAIN, 14));
+            JScrollPane scroll = new JScrollPane(area);
+            scroll.setPreferredSize(new Dimension(300, 300));
+
+            JOptionPane.showMessageDialog(null, scroll,
+                    "Lista de Integrantes", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }
 
     private void salirAction() {
@@ -336,6 +405,9 @@ public class VerEvento extends JFrame {
     private final JLabel equipo2Label = new JLabel("Nombre del Equipo 2:");
     private final JTextField equipo1 = new JTextField();
     private final JTextField equipo2 = new JTextField();
+    private final JButton listajugadoresboton = new JButton("LISTA DE JUGADORES");
+    
+    private final JButton listaintegrantesboton = new JButton("LISTA DE INTEGRANTES");
 
     public static void main(String[] args) {
         new VerEvento().setVisible(true);

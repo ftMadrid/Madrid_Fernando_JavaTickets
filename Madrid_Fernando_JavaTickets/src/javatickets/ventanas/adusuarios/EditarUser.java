@@ -6,6 +6,7 @@ import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdUsuarios;
 import javax.swing.*;
 import java.awt.*;
+import javatickets.ventanas.Principal;
 
 public class EditarUser extends JFrame {
 
@@ -195,7 +196,7 @@ public class EditarUser extends JFrame {
         }
 
         if (existente != null && existente != original) {
-            JOptionPane.showMessageDialog(null, "Ya existe un miembro con ese usuario!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ya existe un miembro con ese usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -213,8 +214,20 @@ public class EditarUser extends JFrame {
                 + "\nEdad: " + iedad + " años"
                 + "\nTipo: " + seleccion, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
-        dispose();
-        new AdUsuarios().setVisible(true);
+        if (original == UserManager.usuarioLogged) {
+
+            UserManager.usuarioLogged = null;
+            UserManager.logged = false;
+            
+            JOptionPane.showMessageDialog(null, "Se ha cerrado sesion por cambios hechos en tu cuenta!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            
+            dispose();
+            new Principal().setVisible(true);
+            
+        } else {
+            dispose();
+            new AdUsuarios().setVisible(true);
+        }
 
     }
 

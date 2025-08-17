@@ -76,7 +76,7 @@ public class EditarEvento extends JFrame {
         eventoLabel.setFont(new Font("Kefa", Font.BOLD, 28));
         eventoLabel.setForeground(Color.WHITE);
 
-        tipoLabel.setBounds(380, 500, 280, 40);
+        tipoLabel.setBounds(380, 500, 300, 40);
         tipoLabel.setFont(new Font("Kefa", Font.BOLD, 28));
         tipoLabel.setForeground(Color.WHITE);
 
