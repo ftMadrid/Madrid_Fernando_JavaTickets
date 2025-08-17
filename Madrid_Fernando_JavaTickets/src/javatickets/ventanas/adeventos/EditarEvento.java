@@ -1,5 +1,6 @@
 package javatickets.ventanas.adeventos;
 
+import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import javatickets.eventos.EventsManager;
 import javatickets.usuarios.UserManager;
@@ -13,6 +14,7 @@ import javatickets.eventos.Deportivo;
 import javatickets.eventos.Musical;
 import javatickets.eventos.Religioso;
 import javatickets.utilidades.Enums;
+import javatickets.utilidades.FechasOcupadasEvaluator;
 import javatickets.ventanas.AdEventos;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -125,6 +127,18 @@ public class EditarEvento extends JFrame {
         fecha.setBounds(380, 336, 280, 35);
         fecha.setFont(new Font("Kefa", Font.PLAIN, 18));
         fecha.setEnabled(false);
+        
+        JCalendar calendario = fecha.getJCalendar();
+
+        java.util.List<Calendar> fechasEventos = new ArrayList<>();
+        for (EventsManager ev : EventsManager.eventos) {
+            if (ev.getEstado()) {
+                fechasEventos.add(ev.getFechaEvento());
+            }
+        }
+
+        FechasOcupadasEvaluator evaluador = new FechasOcupadasEvaluator(fechasEventos);
+        calendario.getDayChooser().addDateEvaluator(evaluador);
 
         pconvertidasLabel.setBounds(380, 390, 280, 40);
         pconvertidasLabel.setFont(new Font("Kefa", Font.BOLD, 22));

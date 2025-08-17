@@ -12,6 +12,10 @@ import javatickets.utilidades.Fondos;
 import javatickets.ventanas.AdEventos;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
+import javatickets.utilidades.FechasOcupadasEvaluator;
+import com.toedter.calendar.JCalendar;
 
 public class CrearEvento extends JFrame {
 
@@ -61,6 +65,18 @@ public class CrearEvento extends JFrame {
 
         fecha.setBounds(380, 327, 280, 35);
         fecha.setFont(new Font("Kefa", Font.PLAIN, 18));
+
+        JCalendar calendario = fecha.getJCalendar();
+
+        List<Calendar> fechasEventos = new ArrayList<>();
+        for (EventsManager ev : EventsManager.eventos) {
+            if (ev.getEstado()) {
+                fechasEventos.add(ev.getFechaEvento());
+            }
+        }
+
+        FechasOcupadasEvaluator evaluador = new FechasOcupadasEvaluator(fechasEventos);
+        calendario.getDayChooser().addDateEvaluator(evaluador);
 
         nombreLabel.setBounds(50, 375, 280, 40);
         nombreLabel.setFont(new Font("Kefa", Font.BOLD, 22));
@@ -251,8 +267,8 @@ public class CrearEvento extends JFrame {
             JOptionPane.showMessageDialog(null, "Ingresa una cantidad de personas valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if(icantidadGente <= 0 ){
+
+        if (icantidadGente <= 0) {
             JOptionPane.showMessageDialog(null, "Ingresa una cantidad de personas valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
