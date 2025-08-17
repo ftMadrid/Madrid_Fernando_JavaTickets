@@ -14,7 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
-import javatickets.utilidades.FechasOcupadasEvaluator;
+import javatickets.utilidades.FechasOcupadas;
 import com.toedter.calendar.JCalendar;
 
 public class CrearEvento extends JFrame {
@@ -75,7 +75,7 @@ public class CrearEvento extends JFrame {
             }
         }
 
-        FechasOcupadasEvaluator evaluador = new FechasOcupadasEvaluator(fechasEventos);
+        FechasOcupadas evaluador = new FechasOcupadas(fechasEventos);
         calendario.getDayChooser().addDateEvaluator(evaluador);
 
         nombreLabel.setBounds(50, 375, 280, 40);

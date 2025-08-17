@@ -57,7 +57,6 @@ public class EventosRealizados extends JFrame {
 
         ArrayList<EventsManager> realizados = new ArrayList<>();
         Calendar hoy = Calendar.getInstance();
-        hoy.set(2025, Calendar.OCTOBER, 10);
         for (EventsManager e : EventsManager.eventos) {
             if (e.getEstado() && e.getFechaEvento().compareTo(hoy) < 0) {
                 realizados.add(e);

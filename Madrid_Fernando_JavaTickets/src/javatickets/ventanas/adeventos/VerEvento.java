@@ -161,7 +161,7 @@ public class VerEvento extends JFrame {
         equipo2.setFont(new Font("Kefa", Font.PLAIN, 18));
         equipo2.setVisible(false);
 
-        salir.setBounds(750, 450, 150, 50);
+        salir.setBounds(500, 210, 150, 40);
         salir.setFont(new Font("Kefa", Font.BOLD, 18));
         salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         salir.setForeground(Color.red);
@@ -199,12 +199,11 @@ public class VerEvento extends JFrame {
         add(panel);
 
     }
-    
-    EventsManager original;
 
     private void buscarAction() {
 
         int icod;
+        Calendar hoy = Calendar.getInstance();
 
         try {
             icod = Integer.parseInt(buscar.getText());
@@ -219,7 +218,6 @@ public class VerEvento extends JFrame {
         }
 
         EventsManager target = EventsManager.buscar(icod);
-        original = target;
 
         if (buscar.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Tienes que ingresar el codigo de un evento para buscarlo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -240,14 +238,23 @@ public class VerEvento extends JFrame {
             fecha.setText(fechaFormat);
             categoria.setText(String.valueOf(target.getSubTipo()));
 
-            if (target.getEstado()) {
-                estado.setText("Vigente");
-            } else {
+            
+            if(target.getFechaEvento().before(hoy)) {
+                multaLabel.setVisible(false);
+                lps2Label.setVisible(false);
+                multa.setVisible(false);
+                estado.setText("Realizado");
+            } else if(!target.getEstado()){
                 estado.setText("Cancelado");
                 multaLabel.setVisible(true);
                 lps2Label.setVisible(true);
                 multa.setText(String.format("%.2f", target.getIndemnizacion()));
                 multa.setVisible(true);
+            } else if (target.getEstado()) {
+                multaLabel.setVisible(false);
+                lps2Label.setVisible(false);
+                multa.setVisible(false);
+                estado.setText("Vigente");
             }
             
             switch (target.getTipo()) {
@@ -273,6 +280,7 @@ public class VerEvento extends JFrame {
                     equipo1.setVisible(false);
                     equipo2Label.setVisible(false);
                     equipo2.setVisible(false);
+                    categoria.setText("N/A");
                     break;
             }
 

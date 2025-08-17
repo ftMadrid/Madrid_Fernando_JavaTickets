@@ -14,7 +14,7 @@ import javatickets.eventos.Deportivo;
 import javatickets.eventos.Musical;
 import javatickets.eventos.Religioso;
 import javatickets.utilidades.Enums;
-import javatickets.utilidades.FechasOcupadasEvaluator;
+import javatickets.utilidades.FechasOcupadas;
 import javatickets.ventanas.AdEventos;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -137,7 +137,7 @@ public class EditarEvento extends JFrame {
             }
         }
 
-        FechasOcupadasEvaluator evaluador = new FechasOcupadasEvaluator(fechasEventos);
+        FechasOcupadas evaluador = new FechasOcupadas(fechasEventos);
         calendario.getDayChooser().addDateEvaluator(evaluador);
 
         pconvertidasLabel.setBounds(380, 390, 280, 40);

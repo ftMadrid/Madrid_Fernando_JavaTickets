@@ -7,11 +7,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class FechasOcupadasEvaluator implements IDateEvaluator {
+public class FechasOcupadas implements IDateEvaluator {
     
     private final List<Date> fechasOcupadas = new ArrayList<>();
 
-    public FechasOcupadasEvaluator(List<Calendar> eventos) {
+    public FechasOcupadas(List<Calendar> eventos) {
         for (Calendar c : eventos) {
             Calendar copia = (Calendar) c.clone();
             copia.set(Calendar.HOUR_OF_DAY, 0);
@@ -44,7 +44,7 @@ public class FechasOcupadasEvaluator implements IDateEvaluator {
 
     @Override
     public boolean isInvalid(Date date) {
-        return false; // No bloqueamos la fecha, solo la resaltamos
+        return false;
     }
 
     @Override
@@ -56,7 +56,6 @@ public class FechasOcupadasEvaluator implements IDateEvaluator {
     @Override
     public String getInvalidTooltip() { return null; }
 
-    // Normaliza la fecha quitando horas/minutos/segundos
     private Date normalizar(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
