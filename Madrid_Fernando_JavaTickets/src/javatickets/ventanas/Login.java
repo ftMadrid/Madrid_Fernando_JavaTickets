@@ -1,14 +1,11 @@
 package javatickets.ventanas;
 
 import java.awt.*;
-import javatickets.usuarios.Administrador;
 import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Fondos;
 import javax.swing.*;
 
 public class Login extends JFrame {
-
-    Administrador admin = new Administrador();
 
     public Login() {
         initVentana();

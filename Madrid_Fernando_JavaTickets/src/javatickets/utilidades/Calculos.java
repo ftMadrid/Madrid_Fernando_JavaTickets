@@ -21,13 +21,11 @@ public final class Calculos {
 
         EventsManager target = EventsManager.buscar(codigo);
 
-        // Calendario de hoy sin horas
         hoy.set(Calendar.HOUR_OF_DAY, 0);
         hoy.set(Calendar.MINUTE, 0);
         hoy.set(Calendar.SECOND, 0);
         hoy.set(Calendar.MILLISECOND, 0);
-
-        // Fecha del evento sin horas
+        
         Calendar fechaEvento = (Calendar) target.getFechaEvento().clone();
         fechaEvento.set(Calendar.HOUR_OF_DAY, 0);
         fechaEvento.set(Calendar.MINUTE, 0);

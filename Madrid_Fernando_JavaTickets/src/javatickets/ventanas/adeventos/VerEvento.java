@@ -6,7 +6,6 @@ import javatickets.eventos.EventsManager;
 import javax.swing.*;
 import java.awt.*;
 import javatickets.eventos.Deportivo;
-import javatickets.utilidades.Enums;
 import static javatickets.utilidades.Enums.TipoEventos.DEPORTIVO;
 import static javatickets.utilidades.Enums.TipoEventos.MUSICAL;
 import static javatickets.utilidades.Enums.TipoEventos.RELIGIOSO;

@@ -34,32 +34,27 @@ public class EventosRealizados extends JFrame {
         panel.setSize(800, 650);
         panel.setLayout(null);
 
-        // Título con imagen
         titulo.setBounds(80, 30, 650, 118);
         titulo.setIcon(new ImageIcon(getClass().getResource("/javatickets/imagenes/tituloer.png")));
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Botón regresar
         regresar.setBounds(300, 550, 200, 50);
         regresar.setFont(new Font("Kefa", Font.BOLD, 18));
         regresar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         regresar.setForeground(Color.RED);
         regresar.addActionListener(e -> regresarAction());
 
-        // Tabla
         String[] columnas = {"CODIGO", "TIPO", "TITULO", "FECHA", "MONTO"};
         DefaultTableModel model = new DefaultTableModel(columnas, 0);
         JTable tabla = new JTable(model);
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(50, 150, 700, 250);
 
-        // Panel de estadísticas
         JPanel panelStats = new JPanel();
         panelStats.setLayout(new GridLayout(3, 1));
         panelStats.setBounds(230, 420, 700, 100);
         panelStats.setOpaque(false);
 
-        // Filtrar solo eventos pasados y no cancelados
         ArrayList<EventsManager> realizados = new ArrayList<>();
         Calendar hoy = Calendar.getInstance();
         hoy.set(2025, Calendar.OCTOBER, 10);
@@ -69,7 +64,6 @@ public class EventosRealizados extends JFrame {
             }
         }
 
-        // Orden manual (Insertion Sort) de más reciente a más antiguo
         for (int i = 1; i < realizados.size(); i++) {
             EventsManager key = realizados.get(i);
             int j = i - 1;
@@ -110,7 +104,6 @@ public class EventosRealizados extends JFrame {
             }
         }
 
-        // Estadísticas con números en PLAIN
         JLabel lblDeportivos = new JLabel("<html><b>Deportivos:</b> " + countDeportivos + " eventos | <b>Monto total:</b> Lps.<span style='font-weight:normal;'>" + String.format("%.2f", montoDeportivos) + "</span></html>");
         lblDeportivos.setFont(new Font("Kefa", Font.PLAIN, 16));
         lblDeportivos.setForeground(Color.WHITE);
@@ -126,7 +119,6 @@ public class EventosRealizados extends JFrame {
         lblMusicales.setForeground(Color.WHITE);
         panelStats.add(lblMusicales);
 
-        // Añadir componentes al panel principal
         panel.add(titulo);
         panel.add(regresar);
         panel.add(scroll);
