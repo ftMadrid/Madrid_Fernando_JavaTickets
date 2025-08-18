@@ -127,7 +127,7 @@ public class EditarEvento extends JFrame {
         fecha.setBounds(380, 336, 280, 35);
         fecha.setFont(new Font("Kefa", Font.PLAIN, 18));
         fecha.setEnabled(false);
-        
+
         JCalendar calendario = fecha.getJCalendar();
 
         java.util.List<Calendar> fechasEventos = new ArrayList<>();
@@ -218,7 +218,7 @@ public class EditarEvento extends JFrame {
     private void buscarAction() {
 
         int icod;
-        
+
         if (buscar.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Tienes que ingresar el codigo de un evento para buscarlo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             actualizarPorError();
@@ -416,6 +416,27 @@ public class EditarEvento extends JFrame {
         if (ipconvertidas < 0 || pconvertidas.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingresa una cantidad de personas convertidas valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+
+        switch (original.getTipo()) {
+            case DEPORTIVO:
+                if (icantidadGente <= 0 || icantidadGente > 20000) {
+                    JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                break;
+            case MUSICAL:
+                if (icantidadGente <= 0 || icantidadGente > 25000) {
+                    JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                break;
+            case RELIGIOSO:
+                if (icantidadGente <= 0 || icantidadGente > 30000) {
+                    JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                break;
         }
 
         if (modeloTabla != null) {

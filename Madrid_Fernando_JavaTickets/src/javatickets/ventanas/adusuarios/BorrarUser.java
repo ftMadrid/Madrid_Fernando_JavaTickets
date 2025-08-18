@@ -73,7 +73,7 @@ public class BorrarUser extends JFrame {
 
         if (target != null) {
             if (usuario.getText().equals(UserManager.usuarios.get(0).getUsuario())) {
-                JOptionPane.showMessageDialog(null, "No puedes borrar a este usuario!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No puedes borrar a este usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             } else {
                 int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar al usuario " + usuario.getText() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
                 if (opcion == JOptionPane.YES_OPTION) {
@@ -82,6 +82,9 @@ public class BorrarUser extends JFrame {
                     if (target.equals(UserManager.usuarioLogged)) {
                         UserManager.usuarioLogged = null;
                         UserManager.logged = false;
+
+                        JOptionPane.showMessageDialog(null, "Se ha cerrado sesion porque se ha eliminado tu cuenta!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+
                         dispose();
                         new Principal().setVisible(true);
                     } else {
@@ -91,7 +94,7 @@ public class BorrarUser extends JFrame {
                 }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "El usuario "+usuario.getText()+" no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El usuario " + usuario.getText() + " no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
     }

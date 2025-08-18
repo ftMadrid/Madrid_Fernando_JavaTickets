@@ -107,7 +107,6 @@ public class AdEventos extends JFrame {
     }
 
     private void salirAction() {
-
         dispose();
         new Sistema().setVisible(true);
 

@@ -21,8 +21,6 @@ public class Sistema extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setLayout(null);
-        
-        
 
     }
 
@@ -92,10 +90,9 @@ public class Sistema extends JFrame {
     private void salirAction() {
 
         dispose();
+        UserManager.usuarioLogged = null;
         UserManager.logged = false;
         new Principal().setVisible(true);
-        /*System.out.println("[CONSOLE LOG] Cerrando el programa...");
-        System.exit(0);*/
 
     }
 

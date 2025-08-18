@@ -54,6 +54,8 @@ public class EditarUser extends JFrame {
         nombre.setBounds(50, 325, 280, 40);
         nombre.setFont(new Font("Kefa", Font.PLAIN, 18));
         nombre.setEnabled(false);
+        
+        nombre.setText("N/A");
 
         usuarioLabel.setBounds(50, 370, 280, 40);
         usuarioLabel.setFont(new Font("Kefa", Font.BOLD, 22));
@@ -62,6 +64,8 @@ public class EditarUser extends JFrame {
         usuario.setBounds(50, 405, 280, 40);
         usuario.setFont(new Font("Kefa", Font.PLAIN, 18));
         usuario.setEnabled(false);
+        
+        usuario.setText("N/A");
 
         passwordLabel.setBounds(50, 455, 280, 40);
         passwordLabel.setFont(new Font("Kefa", Font.BOLD, 22));
@@ -70,6 +74,8 @@ public class EditarUser extends JFrame {
         password.setBounds(50, 490, 280, 40);
         password.setFont(new Font("Kefa", Font.PLAIN, 18));
         password.setEnabled(false);
+        
+        password.setText("N/A");
 
         edadLabel.setBounds(50, 540, 280, 40);
         edadLabel.setFont(new Font("Kefa", Font.BOLD, 22));
@@ -78,6 +84,8 @@ public class EditarUser extends JFrame {
         edad.setBounds(50, 575, 280, 40);
         edad.setFont(new Font("Kefa", Font.PLAIN, 18));
         edad.setEnabled(false);
+        
+        edad.setText("N/A");
 
         tipoLabel.setBounds(380, 355, 280, 40);
         tipoLabel.setFont(new Font("Kefa", Font.BOLD, 22));
@@ -129,12 +137,14 @@ public class EditarUser extends JFrame {
 
         if (buscar.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Tienes que ingresar un usuario para buscarlo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            actualizarErrorDatos();
             return;
         }
 
         if (target != null) {
             if (buscar.getText().equals(UserManager.usuarios.get(0).getUsuario())) {
                 JOptionPane.showMessageDialog(null, "No puedes editar a este usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                actualizarErrorDatos();
             } else {
                 nombre.setText(target.getNombre());
                 nombre.setEnabled(true);
@@ -162,19 +172,23 @@ public class EditarUser extends JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "El usuario " + buscar.getText() + " no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
-            nombre.setText("");
-            nombre.setEnabled(false);
-            usuario.setText("");
-            usuario.setEnabled(false);
-            password.setText("");
-            password.setEnabled(false);
-            edad.setText("");
-            edad.setEnabled(false);
-            tipo.setSelectedItem(null);
-            tipo.setEnabled(false);
-            editar.setEnabled(false);
+            actualizarErrorDatos();
         }
 
+    }
+
+    private void actualizarErrorDatos() {
+        nombre.setText("N/A");
+        nombre.setEnabled(false);
+        usuario.setText("N/A");
+        usuario.setEnabled(false);
+        password.setText("N/A");
+        password.setEnabled(false);
+        edad.setText("N/A");
+        edad.setEnabled(false);
+        tipo.setSelectedItem(null);
+        tipo.setEnabled(false);
+        editar.setEnabled(false);
     }
 
     private void editarAction() {
@@ -218,12 +232,12 @@ public class EditarUser extends JFrame {
 
             UserManager.usuarioLogged = null;
             UserManager.logged = false;
-            
+
             JOptionPane.showMessageDialog(null, "Se ha cerrado sesion por cambios hechos en tu cuenta!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            
+
             dispose();
             new Principal().setVisible(true);
-            
+
         } else {
             dispose();
             new AdUsuarios().setVisible(true);

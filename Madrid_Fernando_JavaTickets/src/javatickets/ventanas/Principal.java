@@ -60,8 +60,8 @@ public class Principal extends JFrame {
     }
 
     private void salirAction() {
+        JOptionPane.showMessageDialog(null, "Que tenga lindo dia!", "CERRANDO PROGRAMA", JOptionPane.INFORMATION_MESSAGE);
         dispose();
-        System.out.println("[CONSOLE LOG] Cerrando el programa...");
         System.exit(0);
     }
 

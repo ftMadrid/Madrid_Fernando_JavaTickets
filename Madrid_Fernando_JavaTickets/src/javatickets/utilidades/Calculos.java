@@ -6,18 +6,21 @@ import javax.swing.JOptionPane;
 
 public final class Calculos {
 
-    private int saldo = 0;
-    private final Calendar hoy = Calendar.getInstance();
+    private static double saldo = 0;
+    private static final Calendar hoy = Calendar.getInstance();
 
-    public final double getSaldo() {
+    private Calculos() {
+    }
+
+    public static final double getSaldo() {
         return saldo;
     }
 
-    public final void agregarSaldo(double monto) {
+    public static final void agregarSaldo(double monto) {
         saldo += monto;
     }
 
-    public final double cobrarIndemnizacion(int codigo) {
+    public static final double cobrarIndemnizacion(int codigo) {
 
         EventsManager target = EventsManager.buscar(codigo);
 
@@ -52,8 +55,7 @@ public final class Calculos {
         return indemnizacion;
     }
 
-    public final static String generarReporteIngresos(Calendar inicio, Calendar fin) {
-        
+    public static final String generarReporteIngresos(Calendar inicio, Calendar fin) {
         double total = 0, totalRentas = 0, totalMultas = 0;
         int deportivos = 0, religiosos = 0, musicales = 0;
 
@@ -95,7 +97,7 @@ public final class Calculos {
                 + "\n\nEventos Realizados:"
                 + "\n   - Deportivos: " + deportivos
                 + "\n   - Religiosos: " + religiosos
-                + "\n   - Musicales: " + musicales;
+                + "\n   - Musicales: " + musicales
+                + String.format("\n\nSaldo global actual: L.%.2f", saldo);
     }
-
 }

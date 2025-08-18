@@ -71,17 +71,18 @@ public class Login extends JFrame {
     private void loginAction() {
 
         UserManager encontrado = UserManager.buscar(usuario.getText());
+        String pass = new String(password.getPassword());
 
-        if (usuario.getText().equals("") || password.getText().equals("")) {
+        if (usuario.getText().equals("") || password.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         if (encontrado != null) {
-            if (password.getText().equals(encontrado.getPassword())) {
+            if (pass.equals(encontrado.getPassword())) {
                 UserManager.usuarioLogged = encontrado;
                 UserManager.logged = true;
-                JOptionPane.showMessageDialog(null, "Has iniciado sesion como " + encontrado.getUsuario(), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Has iniciado sesión como " + encontrado.getUsuario(), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
                 new Sistema().setVisible(true);
                 dispose();
             } else {
@@ -100,7 +101,7 @@ public class Login extends JFrame {
     }
 
     private final JTextField usuario = new JTextField();
-    private final JTextField password = new JTextField();
+    private final JPasswordField password = new JPasswordField();
     private final JLabel userText = new JLabel("Usuario:");
     private final JLabel passText = new JLabel("Contraseña:");
     private final JLabel titulo = new JLabel();

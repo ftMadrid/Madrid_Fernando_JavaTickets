@@ -156,13 +156,12 @@ public abstract class UserManager {
         }
 
         String info = "";
-
+        info += " ";
         for (EventsManager evento : eventosCreados) {
             info += "| Codigo: " + evento.getCodigo() + "\n";
             info += "| Tipo: " + evento.getTipo() + "\n";
             info += "| Titulo: " + evento.getTitulo() + "\n";
             info += "| Monto de Renta: L." + String.format("%.2f", evento.getRenta()) + "\n";
-            info += "| Estado: " + (evento.getEstado() ? "Activo" : "Cancelado") + "\n";
             info += "\n-----------------------------\n";
             info += "\n";
         }

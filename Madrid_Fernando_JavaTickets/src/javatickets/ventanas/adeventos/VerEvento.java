@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import javatickets.eventos.Deportivo;
 import javatickets.eventos.Musical;
+import javatickets.eventos.Religioso;
 import static javatickets.utilidades.Enums.TipoEventos.DEPORTIVO;
 import static javatickets.utilidades.Enums.TipoEventos.MUSICAL;
 import static javatickets.utilidades.Enums.TipoEventos.RELIGIOSO;
@@ -142,7 +143,7 @@ public class VerEvento extends JFrame {
         multa.setFont(new Font("Kefa", Font.PLAIN, 18));
         multa.setEditable(false);
         multa.setVisible(false);
-        
+
         //DEPORTIVO
         equipo1Label.setBounds(710, 288, 280, 40);
         equipo1Label.setFont(new Font("Kefa", Font.BOLD, 22));
@@ -164,26 +165,36 @@ public class VerEvento extends JFrame {
         equipo2.setVisible(false);
         equipo2.setEditable(false);
 
+        pconvertidasLabel.setBounds(710, 288, 280, 40);
+        pconvertidasLabel.setFont(new Font("Kefa", Font.BOLD, 22));
+        pconvertidasLabel.setForeground(Color.WHITE);
+        pconvertidasLabel.setVisible(false);
+
+        pconvertidas.setBounds(710, 324, 280, 40);
+        pconvertidas.setFont(new Font("Kefa", Font.PLAIN, 18));
+        pconvertidas.setVisible(false);
+        pconvertidas.setEditable(false);
+
         salir.setBounds(500, 210, 150, 40);
         salir.setFont(new Font("Kefa", Font.BOLD, 18));
         salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         salir.setForeground(Color.red);
         salir.addActionListener(e -> salirAction());
-        
+
         listajugadoresboton.setBounds(710, 485, 280, 50);
         listajugadoresboton.setFont(new Font("Kefa", Font.BOLD, 18));
         listajugadoresboton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         listajugadoresboton.setForeground(new Color(104, 87, 250));
         listajugadoresboton.addActionListener(e -> listaJugadoresAction());
         listajugadoresboton.setVisible(false);
-        
+
         listaintegrantesboton.setBounds(710, 315, 280, 50);
         listaintegrantesboton.setFont(new Font("Kefa", Font.BOLD, 18));
         listaintegrantesboton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         listaintegrantesboton.setForeground(new Color(104, 87, 250));
         listaintegrantesboton.addActionListener(e -> listaIntegrantesAction());
         listaintegrantesboton.setVisible(false);
-        
+
         panel.add(titulo);
         panel.add(fecha);
         panel.add(buscar);
@@ -215,10 +226,12 @@ public class VerEvento extends JFrame {
         panel.add(equipo2);
         panel.add(listajugadoresboton);
         panel.add(listaintegrantesboton);
+        panel.add(pconvertidasLabel);
+        panel.add(pconvertidas);
         add(panel);
 
     }
-    
+
     private EventsManager global;
 
     private void buscarAction() {
@@ -230,11 +243,13 @@ public class VerEvento extends JFrame {
             icod = Integer.parseInt(buscar.getText());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Solo se aceptan numeros enteros para el codigo", "ERROR", JOptionPane.ERROR_MESSAGE);
+            actualizarDatosAction();
             return;
         }
 
         if (icod <= 0) {
             JOptionPane.showMessageDialog(null, "Ingresa un codigo valido!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            actualizarDatosAction();
             return;
         }
 
@@ -243,6 +258,7 @@ public class VerEvento extends JFrame {
 
         if (buscar.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Tienes que ingresar el codigo de un evento para buscarlo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            actualizarDatosAction();
             return;
         }
 
@@ -260,13 +276,12 @@ public class VerEvento extends JFrame {
             fecha.setText(fechaFormat);
             categoria.setText(String.valueOf(target.getSubTipo()));
 
-            
-            if(target.getFechaEvento().before(hoy)) {
+            if (target.getFechaEvento().before(hoy)) {
                 multaLabel.setVisible(false);
                 lps2Label.setVisible(false);
                 multa.setVisible(false);
                 estado.setText("Realizado");
-            } else if(!target.getEstado()){
+            } else if (!target.getEstado()) {
                 estado.setText("Cancelado");
                 multaLabel.setVisible(true);
                 lps2Label.setVisible(true);
@@ -278,9 +293,11 @@ public class VerEvento extends JFrame {
                 multa.setVisible(false);
                 estado.setText("Vigente");
             }
-            
+
             switch (target.getTipo()) {
                 case DEPORTIVO:
+                    pconvertidasLabel.setVisible(false);
+                    pconvertidas.setVisible(false);
                     listaintegrantesboton.setVisible(false);
                     Deportivo depTarget = (Deportivo) target;
                     equipo1Label.setVisible(true);
@@ -293,6 +310,8 @@ public class VerEvento extends JFrame {
                     break;
 
                 case MUSICAL:
+                    pconvertidasLabel.setVisible(false);
+                    pconvertidas.setVisible(false);
                     equipo1Label.setVisible(false);
                     equipo1.setVisible(false);
                     equipo2Label.setVisible(false);
@@ -308,6 +327,10 @@ public class VerEvento extends JFrame {
                     equipo1.setVisible(false);
                     equipo2Label.setVisible(false);
                     equipo2.setVisible(false);
+                    Religioso relEvento = (Religioso) target;
+                    pconvertidasLabel.setVisible(true);
+                    pconvertidas.setVisible(true);
+                    pconvertidas.setText(String.valueOf(relEvento.getConvertidos()));
                     categoria.setText("N/A");
                     break;
             }
@@ -315,22 +338,34 @@ public class VerEvento extends JFrame {
             JOptionPane.showMessageDialog(null, "Viendo el evento " + target.getTitulo(), "MODO INSPECCIÓN", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "El evento con codigo " + icod + " no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
-            evento.setText("N/A");
-            nombre.setText("N/A");
-            descripcion.setText("N/A");
-            renta.setText("N/A");
-            cantidadGente.setText("N/A");
-            fecha.setText("N/A");
-            categoria.setText("N/A");
-            estado.setText("N/A");
+            actualizarDatosAction();
         }
 
     }
-    
+
+    private void actualizarDatosAction() {
+        evento.setText("N/A");
+        nombre.setText("N/A");
+        descripcion.setText("N/A");
+        renta.setText("N/A");
+        cantidadGente.setText("N/A");
+        fecha.setText("N/A");
+        categoria.setText("N/A");
+        estado.setText("N/A");
+        pconvertidasLabel.setVisible(false);
+        pconvertidas.setVisible(false);
+        listaintegrantesboton.setVisible(false);
+        listajugadoresboton.setVisible(false);
+        equipo1Label.setVisible(false);
+        equipo1.setVisible(false);
+        equipo2Label.setVisible(false);
+        equipo2.setVisible(false);
+    }
+
     private void listaJugadoresAction() {
-        
+
         Deportivo depEvento = (Deportivo) global;
-        
+
         if (depEvento.getListadoJugadores().isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "No hay jugadores para poder listarlos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -344,13 +379,13 @@ public class VerEvento extends JFrame {
             JOptionPane.showMessageDialog(null, scroll,
                     "Lista de Jugadores", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
     }
-    
+
     private void listaIntegrantesAction() {
-        
+
         Musical depEvento = (Musical) global;
-        
+
         if (depEvento.getListaIntegrantes().isEmpty()) {
             JOptionPane.showMessageDialog(null,
                     "No hay integrantes para poder listarlos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -364,7 +399,7 @@ public class VerEvento extends JFrame {
             JOptionPane.showMessageDialog(null, scroll,
                     "Lista de Integrantes", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
     }
 
     private void salirAction() {
@@ -398,15 +433,18 @@ public class VerEvento extends JFrame {
     private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
     private final JButton salir = new JButton("REGRESAR");
     private final JButton buscarboton = new JButton("BUSCAR");
-    
+
     //Extras
     private final JLabel equipo1Label = new JLabel("Nombre del Equipo 1:");
     private final JLabel equipo2Label = new JLabel("Nombre del Equipo 2:");
     private final JTextField equipo1 = new JTextField();
     private final JTextField equipo2 = new JTextField();
     private final JButton listajugadoresboton = new JButton("LISTA DE JUGADORES");
-    
+
     private final JButton listaintegrantesboton = new JButton("LISTA DE INTEGRANTES");
+
+    private final JLabel pconvertidasLabel = new JLabel("Personas Convertidas:");
+    private final JTextField pconvertidas = new JTextField();
 
     public static void main(String[] args) {
         new VerEvento().setVisible(true);

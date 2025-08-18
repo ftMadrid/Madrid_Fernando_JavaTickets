@@ -26,7 +26,7 @@ public class CrearEvento extends JFrame {
 
     private void initVentana() {
 
-        setSize(1100, 700);
+        setSize(700, 700);
         setTitle("JAVA TICKETS | CREAR EVENTO");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -37,7 +37,7 @@ public class CrearEvento extends JFrame {
 
     private void initComponentes() {
 
-        panel.setSize(1100, 700);
+        panel.setSize(700, 700);
         panel.setLayout(null);
 
         titulo.setBounds(-10, 50, 600, 128);
@@ -120,14 +120,14 @@ public class CrearEvento extends JFrame {
         subtipo.setSelectedItem(null);
 
         //DEPORTIVO
-        equipo1Label.setBounds(710, 290, 280, 40);
+        equipo1Label.setBounds(710, 288, 280, 40);
         equipo1Label.setFont(new Font("Kefa", Font.BOLD, 22));
         equipo1Label.setForeground(Color.WHITE);
-        equipo1Label.setVisible(false);
+        equipo1Label.setVisible(true);
 
-        equipo1.setBounds(710, 327, 280, 40);
+        equipo1.setBounds(710, 325, 280, 40);
         equipo1.setFont(new Font("Kefa", Font.PLAIN, 18));
-        equipo1.setVisible(false);
+        equipo1.setVisible(true);
 
         equipo2Label.setBounds(710, 375, 280, 40);
         equipo2Label.setFont(new Font("Kefa", Font.BOLD, 22));
@@ -138,13 +138,13 @@ public class CrearEvento extends JFrame {
         equipo2.setFont(new Font("Kefa", Font.PLAIN, 18));
         equipo2.setVisible(false);
 
-        crear.setBounds(710, 565, 150, 50);
+        crear.setBounds(380, 565, 150, 50);
         crear.setFont(new Font("Kefa", Font.BOLD, 18));
         crear.setCursor(new Cursor(Cursor.HAND_CURSOR));
         crear.setForeground(new Color(0, 153, 0));
         crear.addActionListener(e -> crearAction());
 
-        salir.setBounds(860, 565, 150, 50);
+        salir.setBounds(540, 565, 150, 50);
         salir.setFont(new Font("Kefa", Font.BOLD, 18));
         salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
         salir.setForeground(Color.red);
@@ -198,6 +198,11 @@ public class CrearEvento extends JFrame {
                     if (subtipo.getItemCount() > 0) {
                         subtipo.setSelectedIndex(0);
                     }
+                    crear.setBounds(710, 565, 150, 50);
+                    salir.setBounds(865, 565, 150, 50);
+                    setSize(1050, 700);
+                    panel.setSize(1050, 700);
+                    setLocationRelativeTo(null);
                     break;
 
                 case MUSICAL:
@@ -211,6 +216,11 @@ public class CrearEvento extends JFrame {
                     if (subtipo.getItemCount() > 0) {
                         subtipo.setSelectedIndex(0);
                     }
+                    crear.setBounds(380, 565, 150, 50);
+                    salir.setBounds(540, 565, 150, 50);
+                    setSize(700, 700);
+                    panel.setSize(700, 700);
+                    setLocationRelativeTo(null);
                     break;
 
                 case RELIGIOSO:
@@ -221,6 +231,11 @@ public class CrearEvento extends JFrame {
 
                     subtipo.setEnabled(false);
                     subtipo.setModel(new DefaultComboBoxModel<>());
+                    crear.setBounds(380, 565, 150, 50);
+                    salir.setBounds(540, 565, 150, 50);
+                    setSize(700, 700);
+                    panel.setSize(700, 700);
+                    setLocationRelativeTo(null);
                     break;
             }
         });
@@ -317,6 +332,10 @@ public class CrearEvento extends JFrame {
                     case DEPORTIVO:
                         if (icantidadGente <= 0 || icantidadGente > 20000) {
                             JOptionPane.showMessageDialog(null, "Esa cantidad de personas no esta permitida para este evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        if (equipo1.getText().isEmpty() || equipo2.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                             return;
                         }
                         Enums.TipoDeportes tipodeportes = (Enums.TipoDeportes) subtipo.getSelectedItem();

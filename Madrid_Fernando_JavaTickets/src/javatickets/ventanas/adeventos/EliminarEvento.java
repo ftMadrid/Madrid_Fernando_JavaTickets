@@ -69,9 +69,8 @@ public class EliminarEvento extends JFrame {
         Calendar hoy = Calendar.getInstance();
 
         int icodigo;
-        Calculos calculos = new Calculos();
         double indemnizacion;
-        
+
         if (codigo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
@@ -93,8 +92,8 @@ public class EliminarEvento extends JFrame {
 
                         int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar el evento " + target.getTitulo() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
                         if (opcion == JOptionPane.YES_OPTION) {
-                            indemnizacion = calculos.cobrarIndemnizacion(icodigo);
-                            calculos.agregarSaldo(indemnizacion);
+                            indemnizacion = Calculos.cobrarIndemnizacion(icodigo);
+                            Calculos.agregarSaldo(indemnizacion);
                             target.setIndemnizacion(indemnizacion);
                             dispose();
                             new AdEventos().setVisible(true);
@@ -110,7 +109,7 @@ public class EliminarEvento extends JFrame {
                 JOptionPane.showMessageDialog(null, "El evento con codigo [" + icodigo + "] ya esta cancelado!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "El evento con codigo {" + icodigo + "] no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El evento con codigo [" + icodigo + "] no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
 
     }
