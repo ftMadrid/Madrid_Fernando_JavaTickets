@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javatickets.ventanas.Reportes;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class EventosFuturos extends JFrame {
 
@@ -45,13 +46,50 @@ public class EventosFuturos extends JFrame {
         regresar.addActionListener(e -> regresarAction());
 
         String[] columnas = {"CODIGO", "TIPO", "TITULO", "FECHA", "MONTO"};
-        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+        DefaultTableModel model = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         JTable tabla = new JTable(model);
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tabla.getTableHeader().getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tabla.getTableHeader().setDefaultRenderer(headerRenderer);
+
+        tabla.setFillsViewportHeight(true);
+        tabla.setRowHeight(25);
+        tabla.setFont(new Font("Kefa", Font.PLAIN, 14));
+        tabla.setForeground(Color.BLACK);
+        tabla.setGridColor(Color.DARK_GRAY);
+        tabla.setShowGrid(true);
+        tabla.getTableHeader().setBackground(new Color(252, 246, 126));
+        tabla.getTableHeader().setForeground(Color.BLACK);
+        tabla.getTableHeader().setFont(new Font("Kefa", Font.BOLD, 16));
+        tabla.setSelectionBackground(new Color(135, 206, 250));
+        tabla.setSelectionForeground(Color.BLACK);
+        tabla.getTableHeader().setReorderingAllowed(false);
+
+        tabla.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus,
+                    int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? new Color(250, 250, 252) : Color.WHITE);
+                }
+                setHorizontalAlignment(SwingConstants.CENTER);
+                return c;
+            }
+        });
+
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(50, 150, 700, 250);
+        scroll.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 
         JPanel panelStats = new JPanel();
-        panelStats.setLayout(new GridLayout(3, 1));
+        panelStats.setLayout(new GridLayout(3, 1, 5, 5));
         panelStats.setBounds(230, 420, 700, 100);
         panelStats.setOpaque(false);
 
@@ -85,7 +123,7 @@ public class EventosFuturos extends JFrame {
                 e.getTipo(),
                 e.getTitulo(),
                 sdf.format(e.getFechaEvento().getTime()),
-                String.format("%.2f", e.getRenta())
+                "Lps."+String.format("%.2f", e.getRenta())
             });
 
             switch (e.getTipo()) {

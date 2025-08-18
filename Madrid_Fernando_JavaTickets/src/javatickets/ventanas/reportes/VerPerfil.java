@@ -136,7 +136,7 @@ public class VerPerfil extends JFrame {
             area.setEditable(false);
             area.setFont(new Font("Kefa", Font.PLAIN, 14));
             JScrollPane scroll = new JScrollPane(area);
-            scroll.setPreferredSize(new Dimension(500, 300));
+            scroll.setPreferredSize(new Dimension(300, 300));
 
             JOptionPane.showMessageDialog(null, scroll,
                     "Eventos Creados por " + UserManager.usuarioLogged.getUsuario(), JOptionPane.INFORMATION_MESSAGE);

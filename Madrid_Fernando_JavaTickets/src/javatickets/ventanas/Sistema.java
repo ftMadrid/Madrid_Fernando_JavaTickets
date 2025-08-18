@@ -21,6 +21,8 @@ public class Sistema extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setLayout(null);
+        
+        
 
     }
 

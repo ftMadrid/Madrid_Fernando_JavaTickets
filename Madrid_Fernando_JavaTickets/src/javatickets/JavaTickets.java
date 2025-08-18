@@ -9,7 +9,6 @@ public class JavaTickets {
     public static void main(String[] args) {
 
         UserManager.agregar(new Administrador());
-
         new Principal().setVisible(true);
 
     }

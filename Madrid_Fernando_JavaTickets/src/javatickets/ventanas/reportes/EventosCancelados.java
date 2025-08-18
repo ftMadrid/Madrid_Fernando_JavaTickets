@@ -11,6 +11,7 @@ import static javatickets.utilidades.Enums.TipoEventos.DEPORTIVO;
 import static javatickets.utilidades.Enums.TipoEventos.MUSICAL;
 import static javatickets.utilidades.Enums.TipoEventos.RELIGIOSO;
 import javatickets.ventanas.Reportes;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class EventosCancelados extends JFrame {
 
@@ -47,14 +48,51 @@ public class EventosCancelados extends JFrame {
         regresar.addActionListener(e -> regresarAction());
 
         String[] columnas = {"CODIGO", "TIPO", "TITULO", "FECHA", "MULTA"};
-        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+        DefaultTableModel model = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         JTable tabla = new JTable(model);
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tabla.getTableHeader().getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        tabla.getTableHeader().setDefaultRenderer(headerRenderer);
+
+        tabla.setFillsViewportHeight(true);
+        tabla.setRowHeight(25);
+        tabla.setFont(new Font("Kefa", Font.PLAIN, 14));
+        tabla.setForeground(Color.BLACK);
+        tabla.setGridColor(Color.DARK_GRAY);
+        tabla.setShowGrid(true);
+        tabla.getTableHeader().setBackground(new Color(252, 246, 126));
+        tabla.getTableHeader().setForeground(Color.BLACK);
+        tabla.getTableHeader().setFont(new Font("Kefa", Font.BOLD, 16));
+        tabla.setSelectionBackground(new Color(135, 206, 250));
+        tabla.setSelectionForeground(Color.BLACK);
+        tabla.getTableHeader().setReorderingAllowed(false);
+
+        tabla.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus,
+                    int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? new Color(250, 250, 252) : Color.WHITE);
+                }
+                setHorizontalAlignment(SwingConstants.CENTER);
+                return c;
+            }
+        });
+
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBounds(50, 150, 700, 250);
+        scroll.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
 
         JPanel panelStats = new JPanel();
-        panelStats.setLayout(new GridLayout(4, 1));
-        panelStats.setBounds(190, 420, 700, 120);
+        panelStats.setLayout(new GridLayout(3, 1, 5, 5));
+        panelStats.setBounds(190, 420, 700, 100);
         panelStats.setOpaque(false);
 
         ArrayList<EventsManager> cancelados = new ArrayList<>(EventsManager.eventosCancelados);
@@ -80,7 +118,7 @@ public class EventosCancelados extends JFrame {
                 e.getTipo(),
                 e.getTitulo(),
                 sdf.format(e.getFechaEvento().getTime()),
-                String.format("%.2f", e.getIndemnizacion())
+                "Lps."+String.format("%.2f", e.getIndemnizacion())
             });
 
             switch (e.getTipo()) {

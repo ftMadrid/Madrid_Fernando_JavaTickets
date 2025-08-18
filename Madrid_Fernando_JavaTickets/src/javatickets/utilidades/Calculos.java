@@ -25,7 +25,7 @@ public final class Calculos {
         hoy.set(Calendar.MINUTE, 0);
         hoy.set(Calendar.SECOND, 0);
         hoy.set(Calendar.MILLISECOND, 0);
-        
+
         Calendar fechaEvento = (Calendar) target.getFechaEvento().clone();
         fechaEvento.set(Calendar.HOUR_OF_DAY, 0);
         fechaEvento.set(Calendar.MINUTE, 0);
@@ -44,12 +44,58 @@ public final class Calculos {
         }
 
         JOptionPane.showMessageDialog(null,
-                "Se ha cancelado el evento " + target.getTitulo() + "\n"
-                        + ".\nEstado: Cancelado" 
-                        +String.format("\nIndemnización cobrada: Lps.%.2f", indemnizacion), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                "Se ha cancelado el evento " + target.getTitulo() + ".\n"
+                + "\nEstado: Cancelado"
+                + String.format("\nIndemnización cobrada: Lps.%.2f", indemnizacion), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
         EventsManager.eliminarEvento(target);
         return indemnizacion;
+    }
+
+    public final static String generarReporteIngresos(Calendar inicio, Calendar fin) {
+        
+        double total = 0, totalRentas = 0, totalMultas = 0;
+        int deportivos = 0, religiosos = 0, musicales = 0;
+
+        for (EventsManager evento : EventsManager.eventos) {
+            if (evento != null) {
+                Calendar fechaEvento = evento.getFechaEvento();
+
+                if (!fechaEvento.before(inicio) && !fechaEvento.after(fin)) {
+                    if (evento.getEstado()) {
+                        total += evento.getRenta();
+                        totalRentas += evento.getRenta();
+                    } else {
+                        total += evento.getIndemnizacion();
+                        totalMultas += evento.getIndemnizacion();
+                    }
+
+                    switch (evento.getTipo()) {
+                        case DEPORTIVO:
+                            deportivos++;
+                            break;
+                        case RELIGIOSO:
+                            religiosos++;
+                            break;
+                        case MUSICAL:
+                            musicales++;
+                            break;
+                    }
+                }
+            }
+        }
+
+        return "Ingresos generados del "
+                + inicio.get(Calendar.DAY_OF_MONTH) + "/" + (inicio.get(Calendar.MONTH) + 1) + "/" + inicio.get(Calendar.YEAR)
+                + " al "
+                + fin.get(Calendar.DAY_OF_MONTH) + "/" + (fin.get(Calendar.MONTH) + 1) + "/" + fin.get(Calendar.YEAR)
+                + String.format("\n\nTotal generado: L.%.2f", total)
+                + String.format("\n   - Rentas: L.%.2f", totalRentas)
+                + String.format("\n   - Multas por cancelación: L.%.2f", totalMultas)
+                + "\n\nEventos Realizados:"
+                + "\n   - Deportivos: " + deportivos
+                + "\n   - Religiosos: " + religiosos
+                + "\n   - Musicales: " + musicales;
     }
 
 }

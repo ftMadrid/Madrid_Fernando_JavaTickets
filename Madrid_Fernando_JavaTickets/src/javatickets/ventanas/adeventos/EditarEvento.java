@@ -218,7 +218,12 @@ public class EditarEvento extends JFrame {
     private void buscarAction() {
 
         int icod;
-
+        
+        if (buscar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Tienes que ingresar el codigo de un evento para buscarlo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            actualizarPorError();
+            return;
+        }
         try {
             icod = Integer.parseInt(buscar.getText());
         } catch (NumberFormatException e) {
@@ -235,12 +240,6 @@ public class EditarEvento extends JFrame {
 
         EventsManager target = EventsManager.buscar(icod);
         original = target;
-
-        if (buscar.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Tienes que ingresar el codigo de un evento para buscarlo!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            actualizarPorError();
-            return;
-        }
 
         if (target != null) {
             if (target.getEstado()) {
@@ -513,7 +512,7 @@ public class EditarEvento extends JFrame {
             tablaIntegrantes.setCellSelectionEnabled(true);
 
             header = tablaIntegrantes.getTableHeader();
-            header.setFont(new Font("SansSerif", Font.BOLD, 15));
+            header.setFont(new Font("Kefa", Font.BOLD, 20));
             ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
             int filas = filasPorDeporte(depEvento.getSubTipo());
@@ -542,12 +541,15 @@ public class EditarEvento extends JFrame {
             tablaIntegrantes = new JTable(modeloTabla);
 
             tablaIntegrantes.setRowHeight(26);
-            tablaIntegrantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
             tablaIntegrantes.setGridColor(new Color(220, 220, 220));
             tablaIntegrantes.setShowHorizontalLines(true);
+            tablaIntegrantes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            tablaIntegrantes.setSelectionBackground(new Color(200, 230, 255));
+            tablaIntegrantes.setSelectionForeground(Color.BLACK);
+            tablaIntegrantes.setCellSelectionEnabled(true);
 
             header = tablaIntegrantes.getTableHeader();
-            header.setFont(new Font("SansSerif", Font.BOLD, 15));
+            header.setFont(new Font("Kefa", Font.BOLD, 20));
             ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
 
             for (String miembro : musEvento.getIntegrantes()) {

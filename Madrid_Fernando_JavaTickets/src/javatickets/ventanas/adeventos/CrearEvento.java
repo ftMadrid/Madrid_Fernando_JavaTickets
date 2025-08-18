@@ -287,14 +287,29 @@ public class CrearEvento extends JFrame {
 
         EventsManager target = EventsManager.buscar(icodigo);
 
+        Calendar hoy = Calendar.getInstance();
+        hoy.set(Calendar.HOUR_OF_DAY, 0);
+        hoy.set(Calendar.MINUTE, 0);
+        hoy.set(Calendar.SECOND, 0);
+        hoy.set(Calendar.MILLISECOND, 0);
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(fechaEvento);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         if (target == null) {
             if (!EventsManager.buscarFecha(day, month, year)) {
+
+                if (cal.equals(hoy)) {
+                    JOptionPane.showMessageDialog(null, "No puedes agendar un evento para hoy mismo!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 EventsManager nuevoEvento = null;
 

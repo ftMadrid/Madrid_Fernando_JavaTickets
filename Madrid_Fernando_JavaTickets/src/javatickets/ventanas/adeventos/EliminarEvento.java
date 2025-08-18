@@ -71,6 +71,11 @@ public class EliminarEvento extends JFrame {
         int icodigo;
         Calculos calculos = new Calculos();
         double indemnizacion;
+        
+        if (codigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         try {
             icodigo = Integer.parseInt(codigo.getText());
@@ -80,11 +85,6 @@ public class EliminarEvento extends JFrame {
         }
 
         EventsManager target = EventsManager.buscar(icodigo);
-
-        if (codigo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
 
         if (target != null) {
             if (target.getEstado()) { // chequeo del estado
