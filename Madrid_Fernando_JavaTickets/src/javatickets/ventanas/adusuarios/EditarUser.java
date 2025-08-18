@@ -54,7 +54,7 @@ public class EditarUser extends JFrame {
         nombre.setBounds(50, 325, 280, 40);
         nombre.setFont(new Font("Kefa", Font.PLAIN, 18));
         nombre.setEnabled(false);
-        
+
         nombre.setText("N/A");
 
         usuarioLabel.setBounds(50, 370, 280, 40);
@@ -64,7 +64,7 @@ public class EditarUser extends JFrame {
         usuario.setBounds(50, 405, 280, 40);
         usuario.setFont(new Font("Kefa", Font.PLAIN, 18));
         usuario.setEnabled(false);
-        
+
         usuario.setText("N/A");
 
         passwordLabel.setBounds(50, 455, 280, 40);
@@ -74,7 +74,7 @@ public class EditarUser extends JFrame {
         password.setBounds(50, 490, 280, 40);
         password.setFont(new Font("Kefa", Font.PLAIN, 18));
         password.setEnabled(false);
-        
+
         password.setText("N/A");
 
         edadLabel.setBounds(50, 540, 280, 40);
@@ -84,7 +84,7 @@ public class EditarUser extends JFrame {
         edad.setBounds(50, 575, 280, 40);
         edad.setFont(new Font("Kefa", Font.PLAIN, 18));
         edad.setEnabled(false);
-        
+
         edad.setText("N/A");
 
         tipoLabel.setBounds(380, 355, 280, 40);
@@ -201,7 +201,12 @@ public class EditarUser extends JFrame {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
+        if (password.getText().contains(" ")) {
+            JOptionPane.showMessageDialog(null, "No se puede tener espacios en la contraseña!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         if (!UserManager.validarPassword(password.getText())) {
             JOptionPane.showMessageDialog(null,
                     "La contraseña debe contener al menos:\n"
@@ -222,7 +227,7 @@ public class EditarUser extends JFrame {
             return;
         }
 
-        if (existente != null && existente != original) {
+        if (existente != null && existente != original && existente.getUsuario().equalsIgnoreCase(usuario.getText())) {
             JOptionPane.showMessageDialog(null, "Ya existe un miembro con ese usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -231,8 +236,8 @@ public class EditarUser extends JFrame {
             JOptionPane.showMessageDialog(null, "Ingresa una edad valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if(iedad < 18) {
+
+        if (iedad < 18) {
             JOptionPane.showMessageDialog(null, "El usuario no puede ser menor de edad!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -240,7 +245,7 @@ public class EditarUser extends JFrame {
         Enums.TipoUsuarios seleccion = (Enums.TipoUsuarios) tipo.getSelectedItem();
 
         UserManager.editar(original, nombre.getText(), usuario.getText(), password.getText(), iedad, seleccion);
-        JOptionPane.showMessageDialog(null, "El usuario " +usuario.getText()+" se ha editado con exito!", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El usuario " + usuario.getText() + " se ha editado con exito!", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
         if (original == UserManager.usuarioLogged) {
 

@@ -92,7 +92,7 @@ public abstract class EventsManager {
                     target.setRenta(renta);
                     break;
                 case MUSICAL:
-                    target.setRenta(renta * 0.3);
+                    target.setRenta(renta+(renta * 0.3));
                     break;
                 case RELIGIOSO:
                     target.setRenta(renta + 2000);

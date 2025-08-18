@@ -3,7 +3,6 @@ package javatickets.ventanas.adeventos;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import javatickets.eventos.EventsManager;
-import javatickets.usuarios.UserManager;
 import javatickets.utilidades.Fondos;
 import javax.swing.*;
 import java.awt.*;
@@ -213,7 +212,6 @@ public class EditarEvento extends JFrame {
     }
 
     private EventsManager original;
-    private String stringsubtipos = "";
 
     private void buscarAction() {
 
@@ -241,6 +239,8 @@ public class EditarEvento extends JFrame {
         EventsManager target = EventsManager.buscar(icod);
         original = target;
 
+        double rentaoriginal = 0;
+
         if (target != null) {
             if (target.getEstado()) {
                 codigoLabel.setText("Codigo: " + target.getCodigo());
@@ -249,7 +249,6 @@ public class EditarEvento extends JFrame {
                 nombre.setEnabled(true);
                 descripcion.setText(target.getDescripcion());
                 descripcion.setEnabled(true);
-                renta.setText(String.valueOf(target.getRenta()));
                 renta.setEnabled(true);
                 cantidadGente.setText(String.valueOf(target.getCantidadGente()));
                 cantidadGente.setEnabled(true);
@@ -257,7 +256,7 @@ public class EditarEvento extends JFrame {
                 fecha.setEnabled(true);
 
                 editar.setEnabled(true);
-                JOptionPane.showMessageDialog(null, "Ahora estas editando el evento " + target.getTitulo()+"!", "MODO EDICION", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Ahora estas editando el evento " + target.getTitulo() + "!", "MODO EDICION", JOptionPane.INFORMATION_MESSAGE);
                 panelTabla.setVisible(true);
                 cargarTablaIntegrantes();
 
@@ -273,16 +272,17 @@ public class EditarEvento extends JFrame {
                         panel.setSize(1200, 700);
                         setLocationRelativeTo(null);
 
-                        if (original.getTipo() == Enums.TipoEventos.DEPORTIVO) {
-                            titulo2.setVisible(false);
-                            titulo1.setVisible(true);
-                        } else if (original.getTipo() == Enums.TipoEventos.MUSICAL) {
+                        if (target instanceof Musical musical) {
                             titulo1.setVisible(false);
                             titulo2.setVisible(true);
+                            renta.setText(String.valueOf(musical.getRentaOriginal()));
+                        } else if (target instanceof Deportivo) {
+                            titulo2.setVisible(false);
+                            titulo1.setVisible(true);
+                            renta.setText(String.valueOf(target.getRenta()));
                         }
                         tipoLabel.setVisible(true);
                         tipoLabel.setText(("Categoria: " + target.getSubTipo()));
-                        stringsubtipos = "\n| Tipo: " + target.getSubTipo();
                         break;
                     case RELIGIOSO:
                         Religioso rtarget = (Religioso) original;
@@ -294,6 +294,8 @@ public class EditarEvento extends JFrame {
                         titulo1.setVisible(false);
                         titulo2.setVisible(false);
                         pconvertidasLabel.setVisible(true);
+                        rentaoriginal = target.getRenta() - 2000;
+                        renta.setText(String.valueOf(rentaoriginal));
                         pconvertidas.setVisible(true);
                         pconvertidas.setText(String.valueOf(rtarget.getConvertidos()));
                         break;
@@ -469,6 +471,11 @@ public class EditarEvento extends JFrame {
                 }
             }
         }
+        
+        if(original.getTipo() == Enums.TipoEventos.MUSICAL){
+            Musical mtarget = (Musical) original;
+            mtarget.setRentaOriginal(irenta);
+        }
 
         if (original.getTipo() == Enums.TipoEventos.RELIGIOSO) {
             Religioso rtarget = (Religioso) original;
@@ -476,7 +483,7 @@ public class EditarEvento extends JFrame {
         }
 
         EventsManager.editarEvento(original, titu, descrip, irenta, icantidadGente, day, month, year);
-        JOptionPane.showMessageDialog(null, "El evento ["+original.getCodigo()+"] "+titu+" se ha editado con exito!", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El evento [" + original.getCodigo() + "] " + titu + " se ha editado con exito!", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
         dispose();
         new AdEventos().setVisible(true);

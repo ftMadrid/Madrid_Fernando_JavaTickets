@@ -36,7 +36,7 @@ public abstract class UserManager {
 
         UserManager encontrado = usuarios.get(indice);
 
-        if (encontrado != null && usuario.equals(encontrado.getUsuario())) {
+        if (encontrado != null && usuario.equalsIgnoreCase(encontrado.getUsuario())) {
             return encontrado;
         }
 

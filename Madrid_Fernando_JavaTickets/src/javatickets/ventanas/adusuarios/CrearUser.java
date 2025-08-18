@@ -114,6 +114,11 @@ public class CrearUser extends JFrame {
             return;
         }
 
+        if (pass.contains(" ")) {
+            JOptionPane.showMessageDialog(null, "No se puede tener espacios en la contraseña!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         if (!UserManager.validarPassword(pass)) {
             JOptionPane.showMessageDialog(null,
                     "La contraseña debe contener al menos:\n"
@@ -138,8 +143,8 @@ public class CrearUser extends JFrame {
             JOptionPane.showMessageDialog(null, "Ingresa una edad valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if(iedad < 18) {
+
+        if (iedad < 18) {
             JOptionPane.showMessageDialog(null, "El usuario no puede ser menor de edad!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }

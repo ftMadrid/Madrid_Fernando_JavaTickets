@@ -7,9 +7,11 @@ public class Musical extends EventsManager{
     
     private Enums.TipoMusica tipo;
     private ArrayList<String> integrantes = new ArrayList<>();
+    private double rentaOriginal;
     
     public Musical(int codigo, String titulo, String descripcion, double renta, int cantidadGente, int day, int month, int year, Enums.TipoMusica tipo){
         super(codigo, titulo, descripcion, (renta+(renta*0.3)), cantidadGente, day, month, year);
+        this.rentaOriginal = renta;
         this.tipo = tipo;
     }
     
@@ -36,6 +38,14 @@ public class Musical extends EventsManager{
         
         return info;
         
+    }
+    
+    public double getRentaOriginal() {
+        return rentaOriginal;
+    }
+    
+    public void setRentaOriginal(double rentaOriginal) {
+        this.rentaOriginal = rentaOriginal;
     }
     
     @Override
