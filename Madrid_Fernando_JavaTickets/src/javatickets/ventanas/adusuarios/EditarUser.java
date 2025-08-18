@@ -142,7 +142,7 @@ public class EditarUser extends JFrame {
         }
 
         if (target != null) {
-            if (buscar.getText().equals(UserManager.usuarios.get(0).getUsuario())) {
+            if (buscar.getText().equalsIgnoreCase(UserManager.usuarios.get(0).getUsuario())) {
                 JOptionPane.showMessageDialog(null, "No puedes editar a este usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 actualizarErrorDatos();
             } else {

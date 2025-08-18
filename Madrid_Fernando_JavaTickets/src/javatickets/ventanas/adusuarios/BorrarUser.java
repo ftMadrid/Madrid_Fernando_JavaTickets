@@ -72,7 +72,7 @@ public class BorrarUser extends JFrame {
         }
 
         if (target != null) {
-            if (usuario.getText().equals(UserManager.usuarios.get(0).getUsuario())) {
+            if (usuario.getText().equalsIgnoreCase(UserManager.usuarios.get(0).getUsuario())) {
                 JOptionPane.showMessageDialog(null, "No puedes borrar a este usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             } else {
                 int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar al usuario " + usuario.getText() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
