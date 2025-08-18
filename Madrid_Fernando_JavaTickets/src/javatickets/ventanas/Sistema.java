@@ -81,7 +81,7 @@ public class Sistema extends JFrame {
         }
 
     }
-    
+
     private void reportesAction() {
         dispose();
         new Reportes().setVisible(true);
@@ -89,11 +89,15 @@ public class Sistema extends JFrame {
 
     private void salirAction() {
 
-        dispose();
-        UserManager.usuarioLogged = null;
-        UserManager.logged = false;
-        new Principal().setVisible(true);
+        int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de cerrar sesion?", "CONFIRMACION", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
+        if (opcion == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, "Se ha cerrado sesion con exito!", "CERRAR SESION", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            UserManager.usuarioLogged = null;
+            UserManager.logged = false;
+            new Principal().setVisible(true);
+        }
     }
 
     private final JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");

@@ -337,7 +337,7 @@ public class VerEvento extends JFrame {
 
             JOptionPane.showMessageDialog(null, "Viendo el evento " + target.getTitulo(), "MODO INSPECCIÓN", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "El evento con codigo " + icod + " no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El evento con codigo [" + icod + "] no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
             actualizarDatosAction();
         }
 

@@ -78,7 +78,7 @@ public class BorrarUser extends JFrame {
                 int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar al usuario " + usuario.getText() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
                 if (opcion == JOptionPane.YES_OPTION) {
                     UserManager.borrar(target);
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado el usuario " + usuario.getText() + ".", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado con exito al usuario " + usuario.getText() + "!", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
                     if (target.equals(UserManager.usuarioLogged)) {
                         UserManager.usuarioLogged = null;
                         UserManager.logged = false;

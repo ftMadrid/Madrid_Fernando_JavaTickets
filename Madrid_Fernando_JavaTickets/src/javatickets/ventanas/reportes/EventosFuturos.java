@@ -146,16 +146,16 @@ public class EventosFuturos extends JFrame {
         lblDeportivos.setFont(new Font("Kefa", Font.PLAIN, 16));
         lblDeportivos.setForeground(Color.WHITE);
         panelStats.add(lblDeportivos);
+        
+        JLabel lblMusicales = new JLabel("<html><b>Musicales:</b> " + countMusicales + " eventos | <b>Monto total:</b> Lps.<span style='font-weight:normal;'>" + String.format("%.2f", montoMusicales) + "</span></html>");
+        lblMusicales.setFont(new Font("Kefa", Font.PLAIN, 16));
+        lblMusicales.setForeground(Color.WHITE);
+        panelStats.add(lblMusicales);
 
         JLabel lblReligiosos = new JLabel("<html><b>Religiosos:</b> " + countReligiosos + " eventos | <b>Monto total:</b> Lps.<span style='font-weight:normal;'>" + String.format("%.2f", montoReligiosos) + "</span></html>");
         lblReligiosos.setFont(new Font("Kefa", Font.PLAIN, 16));
         lblReligiosos.setForeground(Color.WHITE);
         panelStats.add(lblReligiosos);
-
-        JLabel lblMusicales = new JLabel("<html><b>Musicales:</b> " + countMusicales + " eventos | <b>Monto total:</b> Lps.<span style='font-weight:normal;'>" + String.format("%.2f", montoMusicales) + "</span></html>");
-        lblMusicales.setFont(new Font("Kefa", Font.PLAIN, 16));
-        lblMusicales.setForeground(Color.WHITE);
-        panelStats.add(lblMusicales);
 
         panel.add(titulo);
         panel.add(regresar);

@@ -122,7 +122,7 @@ public class EventosRealizados extends JFrame {
                 e.getTipo(),
                 e.getTitulo(),
                 sdf.format(e.getFechaEvento().getTime()),
-                "Lps."+String.format("%.2f", e.getRenta())
+                "Lps." + String.format("%.2f", e.getRenta())
             });
 
             switch (e.getTipo()) {
@@ -146,6 +146,12 @@ public class EventosRealizados extends JFrame {
                 + String.format("%.2f", montoDeportivos) + "</html>");
         lblDeportivos.setFont(new Font("Kefa", Font.PLAIN, 16));
         lblDeportivos.setForeground(Color.WHITE);
+        
+        JLabel lblMusicales = new JLabel(
+                "<html><b>Musicales:</b> " + countMusicales + " eventos | <b>Monto total:</b> Lps."
+                + String.format("%.2f", montoMusicales) + "</html>");
+        lblMusicales.setFont(new Font("Kefa", Font.PLAIN, 16));
+        lblMusicales.setForeground(Color.WHITE);
 
         JLabel lblReligiosos = new JLabel(
                 "<html><b>Religiosos:</b> " + countReligiosos + " eventos | <b>Monto total:</b> Lps."
@@ -153,15 +159,9 @@ public class EventosRealizados extends JFrame {
         lblReligiosos.setFont(new Font("Kefa", Font.PLAIN, 16));
         lblReligiosos.setForeground(Color.WHITE);
 
-        JLabel lblMusicales = new JLabel(
-                "<html><b>Musicales:</b> " + countMusicales + " eventos | <b>Monto total:</b> Lps."
-                + String.format("%.2f", montoMusicales) + "</html>");
-        lblMusicales.setFont(new Font("Kefa", Font.PLAIN, 16));
-        lblMusicales.setForeground(Color.WHITE);
-
         panelStats.add(lblDeportivos);
-        panelStats.add(lblReligiosos);
         panelStats.add(lblMusicales);
+        panelStats.add(lblReligiosos);
 
         panel.add(titulo);
         panel.add(regresar);

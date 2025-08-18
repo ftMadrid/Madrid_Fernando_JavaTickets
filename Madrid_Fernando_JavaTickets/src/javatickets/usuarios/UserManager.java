@@ -112,7 +112,7 @@ public abstract class UserManager {
     }
 
     public static boolean validarPassword(String password) {
-        String parametros = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#+_=<>.,;:]).{8,}$";
+        String parametros = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#+_=<>.,;:/\\\\~`|'\"()\\[\\]{}^\\-]).{8,}$";
         return password.matches(parametros);
     }
 
@@ -156,7 +156,7 @@ public abstract class UserManager {
         }
 
         String info = "";
-        info += " ";
+        info += "\n";
         for (EventsManager evento : eventosCreados) {
             info += "| Codigo: " + evento.getCodigo() + "\n";
             info += "| Tipo: " + evento.getTipo() + "\n";

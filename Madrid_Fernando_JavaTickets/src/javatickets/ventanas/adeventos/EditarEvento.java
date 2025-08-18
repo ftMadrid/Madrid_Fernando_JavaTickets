@@ -227,7 +227,7 @@ public class EditarEvento extends JFrame {
         try {
             icod = Integer.parseInt(buscar.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Solo se aceptan numeros enteros para el codigo", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Solo se aceptan numeros enteros para el codigo!", "ERROR", JOptionPane.ERROR_MESSAGE);
             actualizarPorError();
             return;
         }
@@ -243,73 +243,68 @@ public class EditarEvento extends JFrame {
 
         if (target != null) {
             if (target.getEstado()) {
-                if (buscar.getText().equals(UserManager.usuarios.get(0).getUsuario())) {
-                    JOptionPane.showMessageDialog(null, "No puedes editar a este usuario!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                    actualizarPorError();
-                } else {
-                    codigoLabel.setText("Codigo: " + target.getCodigo());
-                    eventoLabel.setText(("Evento: " + target.getTipo()));
-                    nombre.setText(target.getTitulo());
-                    nombre.setEnabled(true);
-                    descripcion.setText(target.getDescripcion());
-                    descripcion.setEnabled(true);
-                    renta.setText(String.valueOf(target.getRenta()));
-                    renta.setEnabled(true);
-                    cantidadGente.setText(String.valueOf(target.getCantidadGente()));
-                    cantidadGente.setEnabled(true);
-                    fecha.setCalendar(target.getFechaEvento());
-                    fecha.setEnabled(true);
+                codigoLabel.setText("Codigo: " + target.getCodigo());
+                eventoLabel.setText(("Evento: " + target.getTipo()));
+                nombre.setText(target.getTitulo());
+                nombre.setEnabled(true);
+                descripcion.setText(target.getDescripcion());
+                descripcion.setEnabled(true);
+                renta.setText(String.valueOf(target.getRenta()));
+                renta.setEnabled(true);
+                cantidadGente.setText(String.valueOf(target.getCantidadGente()));
+                cantidadGente.setEnabled(true);
+                fecha.setCalendar(target.getFechaEvento());
+                fecha.setEnabled(true);
 
-                    editar.setEnabled(true);
-                    JOptionPane.showMessageDialog(null, "Ahora estas editando el evento " + target.getTitulo(), "MODO EDICION", JOptionPane.INFORMATION_MESSAGE);
-                    panelTabla.setVisible(true);
-                    cargarTablaIntegrantes();
+                editar.setEnabled(true);
+                JOptionPane.showMessageDialog(null, "Ahora estas editando el evento " + target.getTitulo()+"!", "MODO EDICION", JOptionPane.INFORMATION_MESSAGE);
+                panelTabla.setVisible(true);
+                cargarTablaIntegrantes();
 
-                    switch (target.getTipo()) {
-                        case DEPORTIVO, MUSICAL:
-                            pconvertidasLabel.setVisible(false);
-                            pconvertidas.setVisible(false);
-                            editar.setBounds(375, 560, 140, 50);
-                            salir.setBounds(522, 560, 140, 50);
-                            codigoLabel.setBounds(380, 395, 280, 40);
-                            eventoLabel.setBounds(380, 447, 280, 40);
-                            setSize(1200, 700);
-                            panel.setSize(1200, 700);
-                            setLocationRelativeTo(null);
+                switch (target.getTipo()) {
+                    case DEPORTIVO, MUSICAL:
+                        pconvertidasLabel.setVisible(false);
+                        pconvertidas.setVisible(false);
+                        editar.setBounds(375, 560, 140, 50);
+                        salir.setBounds(522, 560, 140, 50);
+                        codigoLabel.setBounds(380, 395, 280, 40);
+                        eventoLabel.setBounds(380, 447, 280, 40);
+                        setSize(1200, 700);
+                        panel.setSize(1200, 700);
+                        setLocationRelativeTo(null);
 
-                            if (original.getTipo() == Enums.TipoEventos.DEPORTIVO) {
-                                titulo2.setVisible(false);
-                                titulo1.setVisible(true);
-                            } else if (original.getTipo() == Enums.TipoEventos.MUSICAL) {
-                                titulo1.setVisible(false);
-                                titulo2.setVisible(true);
-                            }
-                            tipoLabel.setVisible(true);
-                            tipoLabel.setText(("Categoria: " + target.getSubTipo()));
-                            stringsubtipos = "\n| Tipo: " + target.getSubTipo();
-                            break;
-                        case RELIGIOSO:
-                            Religioso rtarget = (Religioso) original;
-                            codigoLabel.setBounds(380, 480, 280, 40);
-                            eventoLabel.setBounds(380, 520, 280, 40);
-                            editar.setBounds(375, 570, 140, 50);
-                            salir.setBounds(522, 570, 140, 50);
-                            tipoLabel.setVisible(false);
-                            titulo1.setVisible(false);
+                        if (original.getTipo() == Enums.TipoEventos.DEPORTIVO) {
                             titulo2.setVisible(false);
-                            pconvertidasLabel.setVisible(true);
-                            pconvertidas.setVisible(true);
-                            pconvertidas.setText(String.valueOf(rtarget.getConvertidos()));
-                            break;
+                            titulo1.setVisible(true);
+                        } else if (original.getTipo() == Enums.TipoEventos.MUSICAL) {
+                            titulo1.setVisible(false);
+                            titulo2.setVisible(true);
+                        }
+                        tipoLabel.setVisible(true);
+                        tipoLabel.setText(("Categoria: " + target.getSubTipo()));
+                        stringsubtipos = "\n| Tipo: " + target.getSubTipo();
+                        break;
+                    case RELIGIOSO:
+                        Religioso rtarget = (Religioso) original;
+                        codigoLabel.setBounds(380, 480, 280, 40);
+                        eventoLabel.setBounds(380, 520, 280, 40);
+                        editar.setBounds(375, 570, 140, 50);
+                        salir.setBounds(522, 570, 140, 50);
+                        tipoLabel.setVisible(false);
+                        titulo1.setVisible(false);
+                        titulo2.setVisible(false);
+                        pconvertidasLabel.setVisible(true);
+                        pconvertidas.setVisible(true);
+                        pconvertidas.setText(String.valueOf(rtarget.getConvertidos()));
+                        break;
 
-                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No puedes editar este evento porque esta cancelado!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 actualizarPorError();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "El evento con codigo " + icod + " no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El evento con codigo [" + icod + "] no existe!", "ERROR", JOptionPane.ERROR_MESSAGE);
             actualizarPorError();
         }
 
@@ -373,7 +368,7 @@ public class EditarEvento extends JFrame {
         }
 
         if (fecha == null) {
-            JOptionPane.showMessageDialog(null, "Debes seleccionar una fecha para el evento", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fecha para el evento!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -457,12 +452,6 @@ public class EditarEvento extends JFrame {
                         }
                     }
 
-                    int maxJugadores = filasPorDeporte(depEvento.getSubTipo());
-                    if (jugadoresEquipo1.size() > maxJugadores || jugadoresEquipo2.size() > maxJugadores) {
-                        JOptionPane.showMessageDialog(this, "No pueden haber mas de" + maxJugadores + " jugadores por equipo en " + depEvento.getSubTipo());
-                        return;
-                    }
-
                     depEvento.setJugadores1(jugadoresEquipo1);
                     depEvento.setJugadores2(jugadoresEquipo2);
                 }
@@ -487,15 +476,7 @@ public class EditarEvento extends JFrame {
         }
 
         EventsManager.editarEvento(original, titu, descrip, irenta, icantidadGente, day, month, year);
-        JOptionPane.showMessageDialog(null, "Evento editado exitosamente!\n"
-                + "\n| Evento: " + original.getTipo()
-                + stringsubtipos
-                + "\n| Codigo: " + original.getCodigo()
-                + "\n| Titulo: " + titu
-                + "\n| Descripción: " + descrip
-                + String.format("\n| Monto de Renta: Lps.%.2f", irenta)
-                + "\n| Cantidad de Personas: " + icantidadGente
-                + "\n| Fecha del Evento: " + day + "/" + (month + 1) + "/" + year, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El evento ["+original.getCodigo()+"] "+titu+" se ha editado con exito!", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
         dispose();
         new AdEventos().setVisible(true);

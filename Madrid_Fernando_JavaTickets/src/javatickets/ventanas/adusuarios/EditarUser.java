@@ -201,6 +201,19 @@ public class EditarUser extends JFrame {
             JOptionPane.showMessageDialog(null, "Tienes que llenar todos los campos!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
+        if (!UserManager.validarPassword(password.getText())) {
+            JOptionPane.showMessageDialog(null,
+                    "La contraseña debe contener al menos:\n"
+                    + "\n- 8 caracteres\n"
+                    + "- Una letra minuscula\n"
+                    + "- Una letra mayuscula\n"
+                    + "- Un numero\n"
+                    + "- Un simbolo",
+                    "CONTRASEÑA INVALIDA",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         try {
             iedad = Integer.parseInt(edad.getText());
@@ -218,15 +231,16 @@ public class EditarUser extends JFrame {
             JOptionPane.showMessageDialog(null, "Ingresa una edad valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        if(iedad < 18) {
+            JOptionPane.showMessageDialog(null, "El usuario no puede ser menor de edad!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         Enums.TipoUsuarios seleccion = (Enums.TipoUsuarios) tipo.getSelectedItem();
 
         UserManager.editar(original, nombre.getText(), usuario.getText(), password.getText(), iedad, seleccion);
-        JOptionPane.showMessageDialog(null, "Usuario editado exitosamente!\n"
-                + "\nNombre: " + nombre.getText()
-                + "\nUsuario: " + usuario.getText()
-                + "\nEdad: " + iedad + " años"
-                + "\nTipo: " + seleccion, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "El usuario " +usuario.getText()+" se ha editado con exito!", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
         if (original == UserManager.usuarioLogged) {
 

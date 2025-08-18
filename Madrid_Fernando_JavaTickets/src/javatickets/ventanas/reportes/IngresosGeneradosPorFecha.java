@@ -130,7 +130,7 @@ public class IngresosGeneradosPorFecha extends JFrame {
             area.setWrapStyleWord(true);
 
             JScrollPane scroll = new JScrollPane(area);
-            scroll.setPreferredSize(new Dimension(300, 250));
+            scroll.setPreferredSize(new Dimension(320, 250));
 
             JOptionPane.showMessageDialog(null, scroll,
                     "REPORTE DE INGRESOS POR FECHA", JOptionPane.INFORMATION_MESSAGE);

@@ -86,8 +86,8 @@ public class EliminarEvento extends JFrame {
         EventsManager target = EventsManager.buscar(icodigo);
 
         if (target != null) {
-            if (target.getEstado()) { // chequeo del estado
-                if (target.getCreador() == UserManager.usuarioLogged || UserManager.usuarioLogged == UserManager.usuarios.get(0)) { // chequeo si es el mismo usuariio que creo el evento
+            if (target.getEstado()) {
+                if (target.getCreador() == UserManager.usuarioLogged || UserManager.usuarioLogged == UserManager.usuarios.get(0)) {
                     if (target.getFechaEvento().after(hoy)) {
 
                         int opcion = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar el evento " + target.getTitulo() + "?", "CONFIRMACIÓN", JOptionPane.YES_NO_OPTION);
@@ -100,7 +100,7 @@ public class EliminarEvento extends JFrame {
 
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "No puedes cancelar este evento porque ya se realizó!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "No puedes cancelar este evento porque ya se realizo!", "ERROR", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "No puedes cancelar este evento porque no eres el creador!", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);

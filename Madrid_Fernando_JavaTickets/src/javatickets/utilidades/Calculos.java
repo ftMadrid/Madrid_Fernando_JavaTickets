@@ -47,7 +47,7 @@ public final class Calculos {
         }
 
         JOptionPane.showMessageDialog(null,
-                "Se ha cancelado el evento " + target.getTitulo() + ".\n"
+                "Se ha cancelado el evento ["+target.getCodigo()+"] " + target.getTitulo() + "!\n"
                 + "\nEstado: Cancelado"
                 + String.format("\nIndemnización cobrada: Lps.%.2f", indemnizacion), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
@@ -97,7 +97,6 @@ public final class Calculos {
                 + "\n\nEventos Realizados:"
                 + "\n   - Deportivos: " + deportivos
                 + "\n   - Religiosos: " + religiosos
-                + "\n   - Musicales: " + musicales
-                + String.format("\n\nSaldo global actual: L.%.2f", saldo);
+                + "\n   - Musicales: " + musicales;
     }
 }

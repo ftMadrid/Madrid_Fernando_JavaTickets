@@ -114,6 +114,19 @@ public class CrearUser extends JFrame {
             return;
         }
 
+        if (!UserManager.validarPassword(pass)) {
+            JOptionPane.showMessageDialog(null,
+                    "La contraseña debe contener al menos:\n"
+                    + "\n- 8 caracteres\n"
+                    + "- Una letra minuscula\n"
+                    + "- Una letra mayuscula\n"
+                    + "- Un numero\n"
+                    + "- Un simbolo",
+                    "CONTRASEÑA INVALIDA",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         try {
             iedad = Integer.parseInt(edad.getText());
         } catch (NumberFormatException e) {
@@ -123,6 +136,11 @@ public class CrearUser extends JFrame {
 
         if (iedad <= 0 || iedad >= 100) {
             JOptionPane.showMessageDialog(null, "Ingresa una edad valida!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if(iedad < 18) {
+            JOptionPane.showMessageDialog(null, "El usuario no puede ser menor de edad!", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -147,10 +165,10 @@ public class CrearUser extends JFrame {
             if (nuevoUsuario != null) {
 
                 JOptionPane.showMessageDialog(null, "Usuario creado exitosamente!\n"
-                        + "\nNombre: " + nombre.getText()
-                        + "\nUsuario: " + usuario.getText()
-                        + "\nEdad: " + iedad + " años"
-                        + "\nTipo: " + seleccion, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                        + "\n| Nombre: " + nombre.getText()
+                        + "\n| Usuario: " + usuario.getText()
+                        + "\n| Edad: " + iedad + " años"
+                        + "\n| Tipo: " + seleccion, "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
 
                 UserManager.agregar(nuevoUsuario);
             }

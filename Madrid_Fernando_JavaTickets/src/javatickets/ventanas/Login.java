@@ -45,14 +45,14 @@ public class Login extends JFrame {
         passText.setFont(new Font("Kefa", Font.BOLD, 24));
         passText.setForeground(Color.white);
 
-        aceptar.setBounds(370, 420, 120, 50);
-        aceptar.setFont(new Font("Kefa", Font.BOLD, 20));
+        aceptar.setBounds(210, 410, 280, 40);
+        aceptar.setFont(new Font("Kefa", Font.BOLD, 18));
         aceptar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         aceptar.setForeground(new Color(0, 153, 0));
         aceptar.addActionListener(e -> loginAction());
 
-        regresar.setBounds(210, 420, 120, 50);
-        regresar.setFont(new Font("Kefa", Font.BOLD, 20));
+        regresar.setBounds(210, 460, 280, 40);
+        regresar.setFont(new Font("Kefa", Font.BOLD, 18));
         regresar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         regresar.setForeground(Color.red);
         regresar.addActionListener(e -> regresarAction());
@@ -82,7 +82,7 @@ public class Login extends JFrame {
             if (pass.equals(encontrado.getPassword())) {
                 UserManager.usuarioLogged = encontrado;
                 UserManager.logged = true;
-                JOptionPane.showMessageDialog(null, "Has iniciado sesión como " + encontrado.getUsuario(), "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Has iniciado sesion correctamente como " + encontrado.getUsuario()+"!", "PROCESO EXITOSO", JOptionPane.INFORMATION_MESSAGE);
                 new Sistema().setVisible(true);
                 dispose();
             } else {
@@ -105,7 +105,7 @@ public class Login extends JFrame {
     private final JLabel userText = new JLabel("Usuario:");
     private final JLabel passText = new JLabel("Contraseña:");
     private final JLabel titulo = new JLabel();
-    private final JButton aceptar = new JButton("ACEPTAR");
+    private final JButton aceptar = new JButton("INICIAR SESION");
     private final JButton regresar = new JButton("REGRESAR");
     JPanel panel = new Fondos("/javatickets/imagenes/fondo.png");
 
